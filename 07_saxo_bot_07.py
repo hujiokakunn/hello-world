@@ -3,6 +3,7 @@
 import asyncio
 import base64
 import csv
+import collections
 import hashlib
 import json
 import math
@@ -535,6 +536,9 @@ class SaxoClient:
         self.pair_uic_cache: Dict[str, Dict] = {}
         self.reauthenticate_callback: Optional[callable] = None
         self.ens_event_queue: Optional[asyncio.Queue] = None
+        self._ens_waiters: List[Dict[str, Any]] = []
+        self._ens_waiters_lock = asyncio.Lock()
+        self._ens_event_backlog: collections.deque = collections.deque(maxlen=100)
         self.streaming_context_id: Optional[str] = None
         self.ens_subscription_id: Optional[str] = None
         self.streaming_authorize_enabled: bool = cfg.streaming_authorize_enabled
@@ -554,6 +558,71 @@ class SaxoClient:
             self.ens_event_queue = asyncio.Queue()
         return self.ens_event_queue
 
+    @staticmethod
+    def _ens_event_matches(waiter: Dict[str, Any], event: Dict[str, Any]) -> bool:
+        event_type = event.get("type")
+        if not event_type or event_type not in waiter["expected_event_types"]:
+            return False
+
+        event_uic = int(event.get("uic")) if event.get("uic") is not None else None
+        if event_uic != waiter["uic"]:
+            return False
+
+        if event_type in ["order_fill", "order_status_change"]:
+            if not waiter["order_id"]:
+                return False
+            event_order_id = str(event.get("order_id")) if event.get("order_id") is not None else None
+            if event_order_id != waiter["order_id"]:
+                return False
+            if event_type == "order_fill":
+                status = str(event.get("status", "")).lower()
+                return status in ["filled", "fill", "finalfill"]
+            return True
+
+        if event_type == "position_closed":
+            return True
+
+        return False
+
+    async def _register_ens_waiter(
+        self, order_id: Optional[str], uic: int, expected_event_types: List[str]
+    ) -> asyncio.Future:
+        future = asyncio.get_running_loop().create_future()
+        waiter = {
+            "future": future,
+            "order_id": order_id,
+            "uic": int(uic),
+            "expected_event_types": set(expected_event_types),
+        }
+        async with self._ens_waiters_lock:
+            matched_event = None
+            for event in list(self._ens_event_backlog):
+                if self._ens_event_matches(waiter, event):
+                    matched_event = event
+                    self._ens_event_backlog.remove(event)
+                    break
+            if matched_event is not None:
+                future.set_result(matched_event)
+            else:
+                self._ens_waiters.append(waiter)
+        return future
+
+    async def _unregister_ens_waiter(self, future: asyncio.Future) -> None:
+        async with self._ens_waiters_lock:
+            self._ens_waiters = [waiter for waiter in self._ens_waiters if waiter["future"] is not future]
+
+    async def _dispatch_ens_event(self, event: Dict[str, Any]) -> None:
+        async with self._ens_waiters_lock:
+            matched_waiters = [waiter for waiter in self._ens_waiters if self._ens_event_matches(waiter, event)]
+            if not matched_waiters:
+                self._ens_event_backlog.append(event)
+                return
+            for waiter in matched_waiters:
+                future = waiter["future"]
+                if not future.done():
+                    future.set_result(event)
+            self._ens_waiters = [waiter for waiter in self._ens_waiters if waiter not in matched_waiters]
+
     def generate_streaming_context_id(self) -> str:
         timestamp = str(int(time.time() * 1000))[-10:]
         random_part = "".join(secrets.choice("abcdefghijklmnopqrstuvwxyz0123456789") for _ in range(8))
@@ -562,11 +631,14 @@ class SaxoClient:
         log(f"ストリーミング用ContextId生成: {context_id}")
         return context_id
 
-    def _build_streaming_ws_url(self, context_id: str) -> str:
+    def _build_streaming_ws_url(self, context_id: str, message_id: Optional[int] = None) -> str:
         if not self.access_token:
             raise RuntimeError("access_token がないためStreaming URLを生成できません")
         auth_q = urllib.parse.quote(f"BEARER {self.access_token}", safe="")
-        return f"{self.streaming_ws_base}/connect?contextId={urllib.parse.quote(context_id, safe='')}&authorization={auth_q}"
+        url = f"{self.streaming_ws_base}/connect?contextId={urllib.parse.quote(context_id, safe='')}&authorization={auth_q}"
+        if message_id is not None:
+            url = f"{url}&messageid={message_id}"
+        return url
 
     @staticmethod
     def _mask_ws_url_for_log(url: str) -> str:
@@ -607,11 +679,11 @@ class SaxoClient:
         self.ens_subscription_id = None
         return True
 
-    def rebuild_streaming_url(self) -> Optional[str]:
+    def rebuild_streaming_url(self, message_id: Optional[int] = None) -> Optional[str]:
         if not self.streaming_context_id:
             return None
         try:
-            return self._build_streaming_ws_url(self.streaming_context_id)
+            return self._build_streaming_ws_url(self.streaming_context_id, message_id=message_id)
         except Exception as e:
             log(f"ストリーミングURL再生成に失敗: {e}")
             return None
@@ -1734,9 +1806,10 @@ class SaxoENSClient:
             "OrderFillEvent": self._handle_order_event,
             "PositionChangeEvent": self._handle_position_event,
         }
+        self._listen_task: Optional[asyncio.Task] = None
         self.reconnect_task: Optional[asyncio.Task] = None
         self.last_message_timestamp: float = 0.0
-        self.last_message_id: Optional[str] = None
+        self.last_message_id: Optional[int] = None
         self.last_message_summary: Optional[str] = None
         self.last_ping_ok_timestamp: Optional[float] = None
         self.last_ping_rtt_ms: Optional[float] = None
@@ -1746,6 +1819,7 @@ class SaxoENSClient:
         self.reconnect_started_at: Optional[float] = None
         self.last_disconnect_at: Optional[float] = None
         self._last_notify_seconds: Optional[int] = None
+        self._binary_remainder: bytes = b""
 
     async def connect(self):
         self.access_token = self.saxo_client.access_token
@@ -1759,6 +1833,8 @@ class SaxoENSClient:
 
         if self._monitor_task and not self._monitor_task.done():
             self._monitor_task.cancel()
+        if self._listen_task and not self._listen_task.done():
+            self._listen_task.cancel()
 
         try:
             self._log(f"ENS WebSocket接続中: {self.saxo_client._mask_ws_url_for_log(self.ens_url)}")
@@ -1777,7 +1853,7 @@ class SaxoENSClient:
             self.reconnect_attempts = 0
             self.reconnect_started_at = None
 
-            asyncio.create_task(self.listen())
+            self._listen_task = asyncio.create_task(self.listen())
             self._monitor_task = asyncio.create_task(self.monitor_connection())
 
         except websockets.InvalidStatusCode as e:
@@ -1846,7 +1922,7 @@ class SaxoENSClient:
                         refreshed = await asyncio.to_thread(self.saxo_client.refresh_access_token)
                         if refreshed:
                             await asyncio.to_thread(self.saxo_client.authorize_streaming_context)
-                            rebuilt = await asyncio.to_thread(self.saxo_client.rebuild_streaming_url)
+                            rebuilt = await asyncio.to_thread(self.saxo_client.rebuild_streaming_url, self.last_message_id)
                             if rebuilt:
                                 self.ens_url = rebuilt
                                 await self.connect()
@@ -1881,94 +1957,135 @@ class SaxoENSClient:
 
         self.reconnect_task = asyncio.create_task(_reconnect_logic())
 
+    def _extract_binary_messages(self, data: bytes) -> Tuple[List[Tuple[int, str, str]], bytes]:
+        messages: List[Tuple[int, str, str]] = []
+        off = 0
+        n = len(data)
+        while off + 16 <= n:
+            message_id = int.from_bytes(data[off : off + 8], "little")
+            ref_id_size = data[off + 10]
+            ref_start = off + 11
+            ref_end = ref_start + ref_id_size
+            if ref_end + 1 > n:
+                break
+
+            payload_format = data[ref_end]
+            if payload_format != 0:
+                self._log(f"バイナリメッセージですが、未対応のペイロード形式です: {payload_format}")
+                off = n
+                break
+
+            size_start = ref_end + 1
+            size_end = size_start + 4
+            if size_end > n:
+                break
+
+            payload_size = int.from_bytes(data[size_start:size_end], "little")
+            payload_start = size_end
+            payload_end = payload_start + payload_size
+            if payload_end > n:
+                break
+
+            reference_id = data[ref_start:ref_end].decode("utf-8", errors="replace")
+            payload_json = data[payload_start:payload_end].decode("utf-8", errors="replace")
+            messages.append((message_id, reference_id, payload_json))
+            off = payload_end
+
+        return messages, data[off:]
+
+    def _handle_control_message(self, domain_message: Dict[str, Any], received_at: float) -> bool:
+        if domain_message.get("Reason"):
+            self.last_message_timestamp = received_at
+            reason = domain_message.get("Reason")
+            self._log(f"ENS制御メッセージ検出: Reason={reason}")
+            if reason in ["SubscriptionPermanentlyDisabled", "SessionLimitExceeded", "SubscriptionDisabled"]:
+                self._log("ENSハートビート: subscription系の停止を検出しました。再接続します。")
+                self.is_connected = False
+                return True
+            return False
+
+        message_type = str(domain_message.get("MessageType", "")).lower()
+        if message_type in ["disconnect", "reset", "reset-subscriptions", "resetsubscriptions"]:
+            self._log(f"ENS制御メッセージ検出: MessageType={message_type}")
+            self.is_connected = False
+            return True
+
+        return False
+
     async def listen(self):
         self.last_message_timestamp = time.time()
         while self.is_connected:
             try:
                 message_raw = await self.ws.recv()
                 received_at = time.time()
-                json_payload = None
+                json_payloads: List[str] = []
                 if isinstance(message_raw, bytes):
+                    buffer = self._binary_remainder + message_raw
                     try:
-                        ref_id_size = message_raw[10]
-                        payload_format = message_raw[11 + ref_id_size]
-
-                        if payload_format == 0:
-                            payload_size_bytes = message_raw[12 + ref_id_size : 16 + ref_id_size]
-                            payload_size = int.from_bytes(payload_size_bytes, "little")
-                            payload_start = 16 + ref_id_size
-                            payload_end = payload_start + payload_size
-                            json_payload = message_raw[payload_start:payload_end].decode("utf-8")
-                        else:
-                            self._log(f"バイナリメッセージですが、未対応のペイロード形式です: {payload_format}")
-                            continue
-                    except IndexError:
-                        self._log(
-                            "Saxoバイナリメッセージの解析に失敗しました。"
-                            f"メッセージが短い可能性があります。データ: {message_raw[:100]}"
-                        )
-                        continue
+                        parsed_messages, remainder = self._extract_binary_messages(buffer)
+                        self._binary_remainder = remainder
+                        for message_id, _ref_id, payload in parsed_messages:
+                            self.last_message_id = message_id
+                            if payload:
+                                json_payloads.append(payload)
                     except Exception as e:
                         self._log(f"バイナリメッセージの解析中に予期せぬエラー: {e}")
+                        self._binary_remainder = b""
                         continue
                 else:
-                    json_payload = message_raw
+                    if message_raw:
+                        json_payloads = [message_raw]
 
-                if not json_payload or not str(json_payload).strip():
+                if not json_payloads:
                     continue
 
-                if isinstance(json_payload, str) and json_payload.startswith("_heartbeat"):
-                    self.last_message_timestamp = received_at
-                    continue
-
-                try:
-                    domain_message = json.loads(json_payload)
-
-                    if isinstance(domain_message, dict):
-                        self.last_message_summary = str(list(domain_message.keys()))
-                        self.last_message_id = (
-                            domain_message.get("MessageId")
-                            or domain_message.get("ReferenceId")
-                            or domain_message.get("SequenceNumber")
-                        )
-
-                        if domain_message.get("Reason"):
-                            self.last_message_timestamp = received_at
-                            reason = domain_message.get("Reason")
-                            self._log(f"ENS制御メッセージ検出: Reason={reason}")
-                            if reason in ["SubscriptionPermanentlyDisabled", "SessionLimitExceeded", "SubscriptionDisabled"]:
-                                self._log("ENSハートビート: subscription系の停止を検出しました。再接続します。")
-                                self.is_connected = False
-                                await self.reconnect()
-                            continue
-
-                        message_type = str(domain_message.get("MessageType", "")).lower()
-                        if message_type in ["disconnect", "reset", "reset-subscriptions", "resetsubscriptions"]:
-                            self._log(f"ENS制御メッセージ検出: MessageType={message_type}")
-                            self.is_connected = False
-                            await self.reconnect()
-                            continue
-
-                    activities = []
-                    if isinstance(domain_message, dict):
-                        activities = domain_message.get("Data", [])
-                    elif isinstance(domain_message, list):
-                        activities = domain_message
-
-                    if activities:
+                for json_payload in json_payloads:
+                    if not json_payload or not str(json_payload).strip():
+                        continue
+                    if isinstance(json_payload, str) and json_payload.startswith("_heartbeat"):
                         self.last_message_timestamp = received_at
+                        continue
 
-                    for item in activities:
-                        if isinstance(item, dict):
-                            act_type = item.get("ActivityType")
-                            if act_type == "Orders":
-                                await self._handle_order_event(item)
-                            elif act_type == "Positions":
-                                await self._handle_position_event(item)
+                    try:
+                        domain_message = json.loads(json_payload)
 
-                except json.JSONDecodeError:
-                    self._log(f"JSONデコードエラー。受信データ: {str(json_payload)[:200]}")
-                    continue
+                        control_handled = False
+                        if isinstance(domain_message, dict):
+                            self.last_message_summary = str(list(domain_message.keys()))
+                            if self._handle_control_message(domain_message, received_at):
+                                await self.reconnect()
+                                control_handled = True
+                        elif isinstance(domain_message, list):
+                            for item in domain_message:
+                                if isinstance(item, dict) and ("Reason" in item or "MessageType" in item):
+                                    if self._handle_control_message(item, received_at):
+                                        await self.reconnect()
+                                        control_handled = True
+                                        break
+
+                        if control_handled:
+                            continue
+
+                        activities = []
+                        if isinstance(domain_message, dict):
+                            activities = domain_message.get("Data", [])
+                        elif isinstance(domain_message, list):
+                            activities = domain_message
+
+                        if activities:
+                            self.last_message_timestamp = received_at
+
+                        for item in activities:
+                            if isinstance(item, dict):
+                                act_type = item.get("ActivityType")
+                                if act_type == "Orders":
+                                    await self._handle_order_event(item)
+                                elif act_type == "Positions":
+                                    await self._handle_position_event(item)
+
+                    except json.JSONDecodeError:
+                        self._log(f"JSONデコードエラー。受信データ: {str(json_payload)[:200]}")
+                        continue
 
             except websockets.ConnectionClosed as e:
                 self._log("ENS WebSocket接続が閉じられました。")
@@ -2024,6 +2141,19 @@ class SaxoENSClient:
                         "position_id": str(event_data.get("PositionId")) if event_data.get("PositionId") else None,
                     }
                 )
+                await self.saxo_client._dispatch_ens_event(
+                    {
+                        "type": "order_fill",
+                        "order_id": order_id,
+                        "execution_price": Decimal(str(execution_price)),
+                        "execution_time": event_data.get("ActivityTime"),
+                        "filled_amount": filled_amount,
+                        "amount": amount,
+                        "status": "filled",
+                        "uic": event_data.get("Uic"),
+                        "position_id": str(event_data.get("PositionId")) if event_data.get("PositionId") else None,
+                    }
+                )
         elif status in ["canceled", "cancelled", "rejected", "expired"]:
             if related_label:
                 self._log(f"🧹 {related_label}注文がキャンセル: OrderID={order_id}, Status={status}")
@@ -2032,6 +2162,14 @@ class SaxoENSClient:
                     order_ids.discard(order_id)
             self._log(f"ENSから注文ステータス変更イベント: OrderID={event_data.get('OrderId')}, Status={status}")
             await self.saxo_client._get_ens_event_queue().put(
+                {
+                    "type": "order_status_change",
+                    "order_id": order_id,
+                    "status": status,
+                    "uic": event_data.get("Uic"),
+                }
+            )
+            await self.saxo_client._dispatch_ens_event(
                 {
                     "type": "order_status_change",
                     "order_id": order_id,
@@ -2048,6 +2186,16 @@ class SaxoENSClient:
         if position_event == "deleted" or amount == Decimal("0"):
             self._log(f"ENSからポジションクローズイベントを受信しました: PositionID={position_id}, Event={position_event}")
             await self.saxo_client._get_ens_event_queue().put(
+                {
+                    "type": "position_closed",
+                    "position_id": position_id,
+                    "status": "closed",
+                    "uic": event_data.get("Uic"),
+                    "execution_price": event_data.get("OpenPrice"),
+                    "execution_time": event_data.get("ExecutionTime"),
+                }
+            )
+            await self.saxo_client._dispatch_ens_event(
                 {
                     "type": "position_closed",
                     "position_id": position_id,
@@ -2339,53 +2487,29 @@ def load_trades_from_csv(filename: str) -> List[Dict]:
 
     return trades
 
-
 async def _wait_for_ens_event(
     saxo_client: SaxoClient, order_id: Optional[str], uic: int, expected_event_types: List[str], timeout_seconds: int
 ) -> Optional[Dict]:
     log(f"ENSイベントを監視中 (OrderID: {order_id}, UIC: {uic}, タイプ: {expected_event_types})...")
 
-    start_time = asyncio.get_event_loop().time()
     order_id_str = str(order_id) if order_id is not None else None
     uic_int = int(uic)
+    future = await saxo_client._register_ens_waiter(order_id_str, uic_int, expected_event_types)
 
-    while asyncio.get_event_loop().time() - start_time < timeout_seconds:
-        try:
-            event = await asyncio.wait_for(saxo_client._get_ens_event_queue().get(), timeout=1.0)
-            log(f"受信ENSイベント: {event}")
-
-            event_type = event.get("type")
-            event_uic = int(event.get("uic")) if event.get("uic") is not None else None
-
-            if not event_type or event_type not in expected_event_types or event_uic != uic_int:
-                continue
-
-            match = False
-            if event_type in ["order_fill", "order_status_change"]:
-                event_order_id = str(event.get("order_id")) if event.get("order_id") is not None else None
-                if order_id_str and event_order_id == order_id_str:
-                    if event_type == "order_fill":
-                        status = event.get("status", "").lower()
-                        if status in ["filled", "fill", "finalfill"]:
-                            match = True
-                    else:
-                        match = True
-            elif event_type == "position_closed":
-                match = True
-
-            if match:
-                log(f"★ ENSで期待するイベント({event_type})を受信しました: {event}")
-                return event
-
-        except asyncio.TimeoutError:
-            continue
-        except Exception as e:
-            log(f"ENSイベントの待機中にエラーが発生しました: {e}")
-            break
-
-    log(f"タイムアウト({timeout_seconds}秒)により、OrderID {order_id} / UIC {uic} の {expected_event_types} イベントを確認できませんでした。")
-    return None
-
+    try:
+        event = await asyncio.wait_for(future, timeout=timeout_seconds)
+        log(f"★ ENSで期待するイベント({event.get('type')})を受信しました: {event}")
+        return event
+    except asyncio.TimeoutError:
+        log(
+            f"タイムアウト({timeout_seconds}秒)により、OrderID {order_id} / UIC {uic} の {expected_event_types} イベントを確認できませんでした。"
+        )
+        return None
+    except Exception as e:
+        log(f"ENSイベントの待機中にエラーが発生しました: {e}")
+        return None
+    finally:
+        await saxo_client._unregister_ens_waiter(future)
 
 async def confirm_flat(client: SaxoClient, uic: int, timeout_seconds: int = 60) -> bool:
     start = time.time()
