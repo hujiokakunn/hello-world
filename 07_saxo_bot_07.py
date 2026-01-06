@@ -2251,6 +2251,9 @@ class SaxoENSClient:
 
                 if self.is_connected:
                     self.is_connected = False
+                    await self._force_close_ws()
+                    if self._listen_task and not self._listen_task.done():
+                        self._listen_task.cancel()
                     await self.reconnect()
 
                 break
