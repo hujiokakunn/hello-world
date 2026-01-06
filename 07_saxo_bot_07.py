@@ -634,7 +634,10 @@ class SaxoClient:
                 )
 
                 if response.status_code == 401:
-                    log(f"API {endpoint} が401を返しました。トークンリフレッシュを試みます。")
+                    log(
+                        f"API {endpoint} が401を返しました。トークンリフレッシュを試みます。"
+                        f"レスポンス概要: {response.text[:200]}"
+                    )
                     if self.refresh_access_token():
                         log("トークンリフレッシュ成功。リクエストを再試行します。")
                         continue
@@ -817,6 +820,8 @@ class SaxoClient:
         }
         try:
             response = requests.post(token_url, data=payload, headers=headers, timeout=20)
+            if response.status_code != 200:
+                log(f"トークン交換HTTPエラー: {response.status_code} - {response.text[:200]}")
             response.raise_for_status()
             token_data = response.json()
             self.access_token = token_data["access_token"]
@@ -853,6 +858,8 @@ class SaxoClient:
                         log("リフレッシュトークンが無効です。完全な再認証が必要です。")
                         return False
 
+                    if response.status_code != 200:
+                        log(f"トークン更新HTTPエラー: {response.status_code} - {response.text[:200]}")
                     response.raise_for_status()
 
                     token_data = response.json()
@@ -905,7 +912,7 @@ class SaxoClient:
                     self.client_key = acc.get("ClientKey")
                     log(
                         "FX AccountKey: %s, ClientKey: %s を AccountId: %s 用に選択しました。"
-                        % (self.account_key, self.client_key, acc.get("AccountId"))
+                        % (_mask(self.account_key), _mask(self.client_key), acc.get("AccountId"))
                     )
                     if self.account_key and self.client_key:
                         return True
@@ -2556,16 +2563,26 @@ async def main():
                 if amount_to_close is None:
                     amount_to_close = lot_to_amount(active_trade["lot_size"])
 
-                close_order_id = await asyncio.to_thread(
-                    client.close_position_market,
-                    current_position["position_id"],
-                    active_trade["pair_api"],
-                    active_trade["uic"],
-                    active_trade.get("asset_type", "FxSpot"),
-                    amount_to_close,
-                    active_trade["direction_api"],
-                    make_external_reference(active_trade["id"], "exit"),
-                )
+                close_order_id = None
+                for close_attempt in range(2):
+                    close_order_id = await asyncio.to_thread(
+                        client.close_position_market,
+                        current_position["position_id"],
+                        active_trade["pair_api"],
+                        active_trade["uic"],
+                        active_trade.get("asset_type", "FxSpot"),
+                        amount_to_close,
+                        active_trade["direction_api"],
+                        make_external_reference(active_trade["id"], "exit"),
+                    )
+                    if close_order_id:
+                        break
+                    remaining_position = await asyncio.to_thread(client.get_position_details_by_uic, active_trade["uic"])
+                    if not remaining_position or remaining_position.get("amount") == 0:
+                        log(f"{trade_label} の決済失敗後、ポジションが存在しないため再試行しません。")
+                        break
+                    if close_attempt == 0:
+                        log(f"{trade_label} の決済再試行を実行します（ポジション保持を確認）。")
 
                 if close_order_id:
                     log(f"決済注文が受付されました。OrderID: {close_order_id}")
@@ -2622,16 +2639,33 @@ async def main():
                                 save_statuses(trades_from_csv)
                                 continue
 
-                        order_result = await asyncio.to_thread(
-                            client.place_order,
-                            pair_name=next_trade["pair_api"],
-                            uic=uic,
-                            asset_type=asset_type,
-                            side=next_trade["direction_api"],
-                            amount=lot_to_amount(next_trade["lot_size"]),
-                            current_price_for_sl_tp=current_mid_price,
-                            external_reference=make_external_reference(next_trade["id"], "entry"),
+                        entry_dt = datetime.combine(
+                            datetime.now(TIMEZONE_TOKYO).date(),
+                            _parse_hhmmss(next_trade["entry_time_str"]),
+                            tzinfo=TIMEZONE_TOKYO,
                         )
+                        retry_deadline = entry_dt + timedelta(seconds=3)
+                        order_result = None
+                        attempt = 0
+                        while datetime.now(TIMEZONE_TOKYO) <= retry_deadline:
+                            attempt += 1
+                            order_result = await asyncio.to_thread(
+                                client.place_order,
+                                pair_name=next_trade["pair_api"],
+                                uic=uic,
+                                asset_type=asset_type,
+                                side=next_trade["direction_api"],
+                                amount=lot_to_amount(next_trade["lot_size"]),
+                                current_price_for_sl_tp=current_mid_price,
+                                external_reference=make_external_reference(next_trade["id"], "entry"),
+                            )
+                            if order_result and order_result.get("order_id"):
+                                break
+                            if order_result and order_result.get("status") == "unknown":
+                                break
+                            if datetime.now(TIMEZONE_TOKYO) <= retry_deadline:
+                                log(f"{trade_label} のエントリー再試行を実行します ({attempt}回目)。")
+                                await asyncio.sleep(0.5)
                         if order_result and order_result.get("order_id"):
                             next_trade["entry_order_id"] = order_result["order_id"]
                             next_trade["status"] = "エントリー発注済み"
@@ -2654,8 +2688,12 @@ async def main():
                             break
 
                         else:
-                            log(f"❌ エントリー失敗: {trade_label}")
-                            next_trade["status"] = "エントリー失敗"
+                            if datetime.now(TIMEZONE_TOKYO) > retry_deadline:
+                                log(f"❌ エントリー失敗: {trade_label}（再発注猶予3秒を超過）")
+                                next_trade["status"] = "エントリー失敗 (時間超過)"
+                            else:
+                                log(f"❌ エントリー失敗: {trade_label}")
+                                next_trade["status"] = "エントリー失敗"
 
                     save_statuses(trades_from_csv)
                 else:
