@@ -2007,13 +2007,13 @@ class SaxoENSClient:
 
         return messages, data[off:]
 
-    def _handle_control_message(
+    async def _handle_control_message(
         self, reference_id: Optional[str], domain_message: Dict[str, Any], received_at: float
-    ) -> bool:
+    ) -> Tuple[bool, bool]:
         ref = reference_id or domain_message.get("ReferenceId")
         ref_lower = str(ref or "").lower()
         if not ref_lower.startswith("_"):
-            return False
+            return False, False
 
         self.last_message_timestamp = received_at
 
@@ -2029,14 +2029,17 @@ class SaxoENSClient:
                     if reason in ["SubscriptionPermanentlyDisabled", "SessionLimitExceeded", "SubscriptionDisabled"]:
                         self._log("ENSハートビート: subscription系の停止を検出しました。再接続します。")
                         self.is_connected = False
-                        self.saxo_client.delete_ens_subscription()
-                        return True
-            return True
+                        await asyncio.to_thread(self.saxo_client.delete_ens_subscription)
+                        return True, True
+            return True, False
 
         if ref_lower == "_disconnect":
             self._log("ENS制御メッセージ検出: _disconnect")
             self.is_connected = False
-            return True
+            self.shutdown_requested = True
+            if self._notify:
+                self._notify("⚠️ ENS _disconnect を受信しました。再認証が必要です。")
+            return True, False
 
         if ref_lower == "_resetsubscriptions":
             target_ids = domain_message.get("TargetReferenceIds")
@@ -2048,11 +2051,11 @@ class SaxoENSClient:
             if should_reset:
                 self._log("ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。")
                 self.is_connected = False
-                self.saxo_client.delete_ens_subscription()
-                return True
-            return True
+                await asyncio.to_thread(self.saxo_client.delete_ens_subscription)
+                return True, True
+            return True, False
 
-        return False
+        return False, False
 
     async def listen(self):
         self.last_message_timestamp = time.time()
@@ -2092,20 +2095,25 @@ class SaxoENSClient:
                         domain_message = json.loads(json_payload)
 
                         control_handled = False
+                        force_new_context = False
                         if isinstance(domain_message, dict):
                             self.last_message_summary = str(list(domain_message.keys()))
-                            if self._handle_control_message(reference_id, domain_message, received_at):
-                                await self.reconnect()
-                                control_handled = True
+                            control_handled, force_new_context = await self._handle_control_message(
+                                reference_id, domain_message, received_at
+                            )
                         elif isinstance(domain_message, list):
                             for item in domain_message:
                                 if isinstance(item, dict):
-                                    if self._handle_control_message(reference_id, item, received_at):
-                                        await self.reconnect()
-                                        control_handled = True
+                                    control_handled, force_new_context = await self._handle_control_message(
+                                        reference_id, item, received_at
+                                    )
+                                    if control_handled:
                                         break
 
                         if control_handled:
+                            if self.shutdown_requested:
+                                break
+                            await self.reconnect(force_new_context=force_new_context)
                             continue
 
                         activities = []
@@ -2136,6 +2144,9 @@ class SaxoENSClient:
                 self.is_connected = False
                 if not self.shutdown_requested:
                     await self.reconnect()
+                break
+            except asyncio.CancelledError:
+                self._log("ENS listen task cancelled")
                 break
             except Exception as e:
                 self._log(f"ENSイベントの処理中に予期せぬエラーが発生しました: {e} ({type(e).__name__})")
@@ -2279,26 +2290,30 @@ class SaxoENSClient:
         self._log("ENS接続監視モニターを開始します。")
         await asyncio.sleep(5)
 
-        while self.is_connected:
-            await asyncio.sleep(CFG.ens_monitor_interval_seconds)
+        try:
+            while self.is_connected:
+                await asyncio.sleep(CFG.ens_monitor_interval_seconds)
 
-            time_since_last_message = time.time() - self.last_message_timestamp
-            self._log(f"ENS最終受信からの経過時間: {time_since_last_message:.2f}秒")
+                time_since_last_message = time.time() - self.last_message_timestamp
+                self._log(f"ENS最終受信からの経過時間: {time_since_last_message:.2f}秒")
 
-            await self._record_ping()
-            self._maybe_notify_stale(time_since_last_message)
+                await self._record_ping()
+                self._maybe_notify_stale(time_since_last_message)
 
-            if time_since_last_message > CFG.ens_stale_seconds:
-                self._log("警告: ENS受信が停止したとみなし、再接続を強制します。")
+                if time_since_last_message > CFG.ens_stale_seconds:
+                    self._log("警告: ENS受信が停止したとみなし、再接続を強制します。")
 
-                if self.is_connected:
-                    self.is_connected = False
-                    await self._force_close_ws()
-                    if self._listen_task and not self._listen_task.done():
-                        self._listen_task.cancel()
-                    await self.reconnect()
+                    if self.is_connected:
+                        self.is_connected = False
+                        await self._force_close_ws()
+                        if self._listen_task and not self._listen_task.done():
+                            self._listen_task.cancel()
+                        await self.reconnect()
 
-                break
+                    break
+        except asyncio.CancelledError:
+            self._log("ENS monitor task cancelled")
+            return
 
     async def disconnect(self):
         self.shutdown_requested = True
