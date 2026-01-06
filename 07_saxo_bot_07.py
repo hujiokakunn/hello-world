@@ -317,55 +317,20 @@ def start_local_http_server(redirect_uri: str) -> Tuple[HTTPServer, threading.Th
 
     httpd = HTTPServer((host, port), OAuthCallbackHandler)
 
-    def _serve_once():
+    def _serve_until_done():
+        httpd.timeout = 1
         try:
-            httpd.handle_request()
+            while not OAuthCallbackHandler.done_event.is_set():
+                httpd.handle_request()
         finally:
             httpd.server_close()
 
-    thread = threading.Thread(target=_serve_once, daemon=True)
+    thread = threading.Thread(target=_serve_until_done, daemon=True)
     thread.start()
     return httpd, thread
 
 def get_jst_time_str() -> str:
     return datetime.now(TIMEZONE_TOKYO).strftime("%Y-%m-%d %H:%M:%S")
-
-
-def _get_log_filename(now: Optional[datetime] = None) -> str:
-    if now is None:
-        now = datetime.now(TIMEZONE_TOKYO)
-    date_str = now.strftime("%Y%m%d")
-    weekday_map = {
-        0: "mon",
-        1: "tue",
-        2: "wed",
-        3: "thu",
-        4: "fri",
-        5: "fri",
-        6: "fri",
-    }
-    weekday = weekday_map.get(now.weekday(), "fri")
-    return f"saxo_fx_log_{date_str}_{weekday}.log"
-
-
-def _cleanup_old_logs(log_dir: str, keep_days: int = 7) -> None:
-    try:
-        cutoff_date = datetime.now(TIMEZONE_TOKYO).date() - timedelta(days=keep_days - 1)
-        for filename in os.listdir(log_dir):
-            if not filename.startswith("saxo_fx_log_") or not filename.endswith(".log"):
-                continue
-            parts = filename.split("_")
-            if len(parts) < 4:
-                continue
-            date_part = parts[3]
-            try:
-                file_date = datetime.strptime(date_part, "%Y%m%d").date()
-            except ValueError:
-                continue
-            if file_date < cutoff_date:
-                os.remove(os.path.join(log_dir, filename))
-    except Exception as e:
-        print(f"[{get_jst_time_str()}] ログファイルの整理に失敗しました: {e}")
 
 
 def _get_log_filename(now: Optional[datetime] = None) -> str:
@@ -569,7 +534,7 @@ class SaxoClient:
         self.last_refresh_time: float = 0
         self.pair_uic_cache: Dict[str, Dict] = {}
         self.reauthenticate_callback: Optional[callable] = None
-        self.ens_event_queue: asyncio.Queue = asyncio.Queue()
+        self.ens_event_queue: Optional[asyncio.Queue] = None
         self.streaming_context_id: Optional[str] = None
         self.ens_subscription_id: Optional[str] = None
         self.streaming_authorize_enabled: bool = cfg.streaming_authorize_enabled
@@ -583,6 +548,11 @@ class SaxoClient:
 
     def set_reauthenticate_func(self, func: callable):
         self.reauthenticate_callback = func
+
+    def _get_ens_event_queue(self) -> asyncio.Queue:
+        if self.ens_event_queue is None:
+            self.ens_event_queue = asyncio.Queue()
+        return self.ens_event_queue
 
     def generate_streaming_context_id(self) -> str:
         timestamp = str(int(time.time() * 1000))[-10:]
@@ -656,7 +626,12 @@ class SaxoClient:
         endpoint = self.cfg.streaming_authorize_path
         param_key = self.cfg.streaming_authorize_param
         try:
-            url = f"{self.base_url}{endpoint}"
+            streaming_base = self.streaming_ws_base
+            if streaming_base.endswith("/oapi/streaming/ws"):
+                streaming_base = streaming_base[: -len("/oapi/streaming/ws")]
+            parsed = urllib.parse.urlparse(streaming_base)
+            scheme = "https" if parsed.scheme in ("wss", "https") else "http"
+            url = parsed._replace(scheme=scheme).geturl() + endpoint
             headers = {"Authorization": f"Bearer {self.access_token}", "Accept": "application/json"}
             response = self.session.request(
                 "POST",
@@ -1144,7 +1119,7 @@ class SaxoClient:
 
     def get_price_info(self, uic: str, asset_type: str = "FxSpot") -> Optional[Dict]:
         endpoint = "/trade/v1/infoprices"
-        params = {"AccountKey": self.account_key, "Uics": str(uic), "AssetType": asset_type, "FieldGroups": "Quote,DisplayAndFormat"}
+        params = {"AccountKey": self.account_key, "Uic": str(uic), "AssetType": asset_type, "FieldGroups": "Quote,DisplayAndFormat"}
         data = self._make_request("GET", endpoint, params=params, is_price_request=True)
         if data and "Data" in data and len(data["Data"]) > 0:
             if "Quote" in data["Data"][0] and data["Data"][0]["Quote"].get("Bid") is not None and data["Data"][0][
@@ -1284,6 +1259,9 @@ class SaxoClient:
             body["Orders"] = related_orders
 
         data = self._make_request("POST", "/trade/v2/orders", json_data=body, retry_safe=False)
+        if isinstance(data, dict) and data.get("ErrorInfo"):
+            log(f"注文エラー(ErrorInfo): {data['ErrorInfo']}")
+            raise RuntimeError("注文がErrorInfoで失敗しました。")
 
         if data is None:
             found_order = self.find_order_by_external_reference(external_reference)
@@ -2033,7 +2011,7 @@ class SaxoENSClient:
                     for uic, order_ids in self.saxo_client.tp_sl_order_ids_by_uic.items():
                         order_ids.discard(order_id)
                 self._log(f"✨ ENSから注文完全約定イベント: OrderID={order_id}, Price={execution_price}")
-                await self.saxo_client.ens_event_queue.put(
+                await self.saxo_client._get_ens_event_queue().put(
                     {
                         "type": "order_fill",
                         "order_id": order_id,
@@ -2053,7 +2031,7 @@ class SaxoENSClient:
                 for uic, order_ids in self.saxo_client.tp_sl_order_ids_by_uic.items():
                     order_ids.discard(order_id)
             self._log(f"ENSから注文ステータス変更イベント: OrderID={event_data.get('OrderId')}, Status={status}")
-            await self.saxo_client.ens_event_queue.put(
+            await self.saxo_client._get_ens_event_queue().put(
                 {
                     "type": "order_status_change",
                     "order_id": order_id,
@@ -2069,7 +2047,7 @@ class SaxoENSClient:
 
         if position_event == "deleted" or amount == Decimal("0"):
             self._log(f"ENSからポジションクローズイベントを受信しました: PositionID={position_id}, Event={position_event}")
-            await self.saxo_client.ens_event_queue.put(
+            await self.saxo_client._get_ens_event_queue().put(
                 {
                     "type": "position_closed",
                     "position_id": position_id,
@@ -2373,7 +2351,7 @@ async def _wait_for_ens_event(
 
     while asyncio.get_event_loop().time() - start_time < timeout_seconds:
         try:
-            event = await asyncio.wait_for(saxo_client.ens_event_queue.get(), timeout=1.0)
+            event = await asyncio.wait_for(saxo_client._get_ens_event_queue().get(), timeout=1.0)
             log(f"受信ENSイベント: {event}")
 
             event_type = event.get("type")
