@@ -327,9 +327,45 @@ def start_local_http_server(redirect_uri: str) -> Tuple[HTTPServer, threading.Th
     thread.start()
     return httpd, thread
 
-
 def get_jst_time_str() -> str:
     return datetime.now(TIMEZONE_TOKYO).strftime("%Y-%m-%d %H:%M:%S")
+
+
+def _get_log_filename(now: Optional[datetime] = None) -> str:
+    if now is None:
+        now = datetime.now(TIMEZONE_TOKYO)
+    date_str = now.strftime("%Y%m%d")
+    weekday_map = {
+        0: "mon",
+        1: "tue",
+        2: "wed",
+        3: "thu",
+        4: "fri",
+        5: "fri",
+        6: "fri",
+    }
+    weekday = weekday_map.get(now.weekday(), "fri")
+    return f"saxo_fx_log_{date_str}_{weekday}.log"
+
+
+def _cleanup_old_logs(log_dir: str, keep_days: int = 7) -> None:
+    try:
+        cutoff_date = datetime.now(TIMEZONE_TOKYO).date() - timedelta(days=keep_days - 1)
+        for filename in os.listdir(log_dir):
+            if not filename.startswith("saxo_fx_log_") or not filename.endswith(".log"):
+                continue
+            parts = filename.split("_")
+            if len(parts) < 4:
+                continue
+            date_part = parts[3]
+            try:
+                file_date = datetime.strptime(date_part, "%Y%m%d").date()
+            except ValueError:
+                continue
+            if file_date < cutoff_date:
+                os.remove(os.path.join(log_dir, filename))
+    except Exception as e:
+        print(f"[{get_jst_time_str()}] ログファイルの整理に失敗しました: {e}")
 
 
 def extract_hms_jst(ts: Optional[str]) -> str:
@@ -347,11 +383,19 @@ def extract_hms_jst(ts: Optional[str]) -> str:
     except Exception:
         return s
 
-
 def log(message: str) -> None:
     timestamp = get_jst_time_str()
-    print(f"[{timestamp}] {message}")
-
+    line = f"[{timestamp}] {message}"
+    print(line)
+    try:
+        log_dir = os.getcwd()
+        log_filename = _get_log_filename()
+        log_path = os.path.join(log_dir, log_filename)
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(line + "\n")
+        _cleanup_old_logs(log_dir)
+    except Exception as e:
+        print(f"[{timestamp}] ログファイル出力に失敗しました: {e}")
 
 def _mask(s: str, keep: int = 4) -> str:
     if not s:
@@ -1545,6 +1589,46 @@ class SaxoClient:
             log(f"既存取引確認中にエラー: {e}")
             return True, None
 
+    def list_working_orders_by_uic(self, uic: int) -> List[Dict]:
+        endpoint = "/port/v1/orders"
+        params = {"AccountKey": self.account_key, "ClientKey": self.client_key, "Uics": str(uic), "$top": 100}
+        orders_data = self._make_request("GET", endpoint, params=params)
+        if not orders_data or "Data" not in orders_data:
+            return []
+        working_statuses = {"Working", "Placed", "Queued"}
+        return [order for order in orders_data["Data"] if order.get("Status") in working_statuses]
+
+    def cancel_order(self, order_id: str) -> bool:
+        if not order_id:
+            return False
+        endpoint = f"/trade/v2/orders/{order_id}"
+        params = {"AccountKey": self.account_key}
+        response = self._make_request("DELETE", endpoint, params=params)
+        if response is None:
+            log(f"注文キャンセルに失敗しました: OrderId={order_id}")
+            return False
+        log(f"注文キャンセルを実行しました: OrderId={order_id}")
+        return True
+
+    def cancel_related_orders_for_uic(self, uic: int) -> None:
+        working_orders = self.list_working_orders_by_uic(uic)
+        if not working_orders:
+            log(f"UIC {uic} のキャンセル対象注文はありません。")
+            return
+        cancel_candidates = []
+        for order in working_orders:
+            order_type = str(order.get("OrderType", "")).lower()
+            if order_type in {"limit", "stop", "stopiftraded", "stoplimit", "trailingstop"}:
+                cancel_candidates.append(order)
+        if not cancel_candidates:
+            log(f"UIC {uic} のTP/SL候補注文はありません。")
+            return
+        log(f"UIC {uic} のTP/SL候補注文を {len(cancel_candidates)} 件キャンセルします。")
+        for order in cancel_candidates:
+            order_id = str(order.get("OrderId"))
+            if order_id:
+                self.cancel_order(order_id)
+
     def find_order_by_external_reference(self, external_reference: str) -> Optional[Dict]:
         if not external_reference:
             return None
@@ -2563,6 +2647,8 @@ async def main():
                 if amount_to_close is None:
                     amount_to_close = lot_to_amount(active_trade["lot_size"])
 
+                await asyncio.to_thread(client.cancel_related_orders_for_uic, active_trade["uic"])
+
                 close_order_id = None
                 for close_attempt in range(2):
                     close_order_id = await asyncio.to_thread(
@@ -2646,9 +2732,9 @@ async def main():
                         )
                         retry_deadline = entry_dt + timedelta(seconds=3)
                         order_result = None
-                        attempt = 0
-                        while datetime.now(TIMEZONE_TOKYO) <= retry_deadline:
-                            attempt += 1
+                        for attempt in range(2):
+                            if datetime.now(TIMEZONE_TOKYO) > retry_deadline:
+                                break
                             order_result = await asyncio.to_thread(
                                 client.place_order,
                                 pair_name=next_trade["pair_api"],
@@ -2663,9 +2749,9 @@ async def main():
                                 break
                             if order_result and order_result.get("status") == "unknown":
                                 break
-                            if datetime.now(TIMEZONE_TOKYO) <= retry_deadline:
-                                log(f"{trade_label} のエントリー再試行を実行します ({attempt}回目)。")
-                                await asyncio.sleep(0.5)
+                            if attempt == 0 and datetime.now(TIMEZONE_TOKYO) <= retry_deadline:
+                                log(f"{trade_label} のエントリー再試行を2秒後に実行します。")
+                                await asyncio.sleep(2)
                         if order_result and order_result.get("order_id"):
                             next_trade["entry_order_id"] = order_result["order_id"]
                             next_trade["status"] = "エントリー発注済み"
