@@ -1353,8 +1353,499 @@ We therefore strongly recommend against using the Expect:100-Continue header, an
 
 See also the live sample on error handling (with source).
 ############################################
-########## ポジションと注文の監視１ ##########
+## SIM/LIVE のベースURL（REST/Streaming）
+############################################
+https://www.developer.saxo/openapi/learn/environments
+Environments
+The Simulation Environment
+The Simulation  environment, or demo environment, is a copy of our live environment with a simulated $100,000.- account value for individual users. As a development environment, it is used by thousands of leads daily, primarily for testing purposes. Although the SIM environment is maintained as a close replica of the LIVE environment, technical issues with the simulation environment are handled with lower priority. In addition, certain specific functionality such as reporting and market data are not available in SIM.
+
+URL	Description
+https://developer.saxobank.com/openapi/
+The developer portal. Contains:
+
+Functionality to get a one-day token
+Reference Documentation
+Explorer
+Tutorials
+Sample Code
+Link to SaxoTrader GO on Simulation 
+https://gateway.saxobank.com/sim/openapi
+API endpoint for REST calls
+https://sim-streaming.saxobank.com/sim/oapi/streaming/ws
+
+WebSocket streaming service.
+
+This address has recently been updated, as mentioned in our Planned Changes
+
+
+
+https://sim.logonvalidation.net
+Authorization and Authentication base URL.
+
+
+NOTE: The OpenAPI on Simulation may be at a higher version number than the OpenAPI on the live environment.
+
+Please also read our interface versioning and obsolescence policy located here.
+
+
+
+The Live Environment
+The Live environment covers the full suite of tools and functionality offered by Saxo Bank, including (live) price data, reporting services, etc. It trades against actual account balances and required permission and testing before applications are deployed.
+
+URL	Description
+https://gateway.saxobank.com/openapi
+API endpoint for REST calls
+https://live-streaming.saxobank.com/oapi/streaming/ws
+WebSocket streaming service
+
+This address has recently been updated, as mentioned in our Planned Changes
+
+https://live.logonvalidation.net
+Authorization and Authentication base URL.
+
+
+Our documentation and samples all run against the simulation environment.
+
+One-day tokens obtained through the Developer Portal are only authorized for the simulation environment.
+
+Both the simulation and live environment support the full security flow.
+
+You can only get a token for the live environment by going through one of the security flows. These flows require the presentation of an application key and application secret, which you will have received from Saxo's OpenAPI Platform Team.
+
+The application key and secret are not shared between the simulation and live environments.
+
+############################################
+## 「Status=Working」の例が載ってるページ
+############################################
+https://www.developer.saxo/openapi/learn/orders-and-positions
+Orders and Positions
+When an order is fully or partially filled, a new position is created. Netpositions give an overview of exposure and average purchase price across multiple positions. Simply an aggregated/summarized position by instrument on a selected client, account or group of accounts.
+
+The profit/loss, exposure  and currency are determined by the calculation entity requested. All values are available in real-time. Hence, if only ClientKey is specified the calculation currency is the client's base currency. But if a AccountKey is specified, the base currency values will be returned in account currency. When AccountGroupKey is specified, calculations are returned in the client's base currency, but only for the accounts in the given group.
+
+You may start one netposition subscription on the client level, and another on a specific account.
+
+To get all positions under a given Netposition, use the NetPositionId filter on the Positions endpoint.
+
+We highly recommend writing your application to leverage NetPositions rather than relying on updates and repeatedly iterating a list of individual positions.
+
+
+
+
+
+Getting NetPositions, Positions and Orders
+Getting a list of your open orders, positions or NetPositions is simple. Below are some examples of the most common operations.
+
+You must always specify the client/account/account perspective, so either use the /me endpoints for default client level, or specify a ClientKey and optionally an AccountKey or AccountGroupKey. 
+
+Current prices, distance to market and profit/loss calculations are based on the user's market data access agreements. Some exchanges only allow real-time prices streamed to one session. This means that you can loose your price feed rights if logging in from multiple platforms. See Session Capabilities for details.
+Example: How to get list of orders, positions or NetPositions on an account or across all accounts
+The fastest and simplest way to get a list of orders, positions or NetPositions across all accounts, calculated in client currency, for the logged in user is to use the /me endpoint. It is available on all portfolio services.
+
+Get my positions:
+GET https://gateway.saxobank.com/sim/openapi/port/v1/positions?ClientKey={clientkey} 
+To get all positions under a given account, with all values calculated in account currency, specify the clientkey and accountkey.
+
+Get all positions on a specific account:
+GET https://gateway.saxobank.com/sim/openapi/port/v1/positions?ClientKey={clientkey}&AccountKey={accountKey}
+Get all positions on a specific account group:
+GET https://gateway.saxobank.com/sim/openapi/port/v1/positions?ClientKey={clientkey}&AccountGroupKey={accountKey}
+Example: How to get all positions under a Netposition
+To get a list of all positions under a given Netposition, use the NetPositionId filter argument. The calculation currency is determined by the ClientKey, or if AccountKey is specified the account currency.
+
+GET https://gateway.saxobank.com/sim/openapi/port/v1/positions?ClientKey={clientkey}&NetPositionId={netpositionid}
+Example: How to get market active orders only
+You may want to omit the passive order types that are not market active before a given price threshold or event takes place. such as the family of stop and trailing orders.
+
+Get the current market active orders only:
+GET https://gateway.saxobank.com/sim/openapi/port/v1/orders?ClientKey={clientkey}&Status=Working
+Example: How to get a list of positions under a underlying client. 
+For partners, getting orders, positions or NetPositions for an underlying client, or client account is no different than getting them for your own client. You simply specify the ClientKey and optionally AccountKey for the underlying partner or client.
+
+Get all positions on a underlying client's account:
+GET https://gateway.saxobank.com/sim/openapi/port/v1/positions?ClientKey={clientkey of subclient}&AccountKey={accountKey of subclient}
+ClosedPositions and the client's position netting mode
+For clients, two netting modes are available, End of day and Intraday. The main difference is that with Intraday netting, positions are moved from Positions lists to the ClosedPositions endpoint as they are closed.
+
+With End of day netting, closed positions stay on the Positions lists until end of day. In both cases, final settlement still occurs at end of day. It can be practical to only see active open positions, so this endpoint allows qualified clients to switch the netting mode. See this article for an in-depth explanation.
+
+Example: How to get a list of closed positions for a client on Intraday netting
+Get all closed positions on a client's account:
+GET https://gateway.saxobank.com/sim/openapi/port/v1/closedpositions?ClientKey={clientkey}&AccountKey={accountkey}
+ Netposition Status (Explicit close vs implicit close)
+Since Saxo supports explicit netting of positions, one subtle distinction to note is the difference between an explicitly closed position vs. an implicitly closed position. If one specifies a RelatedPositionId when placing an order, the resulting position will be explicitly related to the related position.
+
+A Netposition consisting only of closed, explicitly related positions, will have status Closed
+If one or more positions are PartiallyFilled, then the Status will be PartiallyFilled
+If the sum of unrelated positions is 0, the Status will be Square
+In all other instances, the NetPosition will have Status Open
+
+############################################
+## ENSイベントの OrderStatus=Cancelled 受信の有無
+############################################
+https://www.developer.saxo/openapi/referencedocs/ens/v1/clientactivities/post__ens_activities_subscriptions
+Reference Docs  Ens  Client Activities
+Create a subscription for client events
+Endpoint Url
+ https://gateway.saxobank.com/sim/openapi/ens/v1/activities/subscriptions
+
+Endpoint Description
+Sets up an active subscription to listen client events.
+
+Endpoint Access Level
+Required Permissions:
+Personal : Subscribe
+
+Endpoint Parameters
+Request parameters
+Name	Type	Origin	Description
+Arguments	SubscriptionActivityRequest	Body	Arguments for the subscription request.
+ContextId	String	Body	The streaming context id that this request is associated with. This parameter must only contain letters (a-z) and numbers (0-9) as well as - (dash) and _ (underscore). It is case insensitive. Max length is 50 characters.
+Format	String	Body	Optional Media type (RFC 2046) of the serialized data updates that are streamed to the client. Currently only application/json and application/x-protobuf is supported. If an unrecognized format is specified, the subscription end point will return HTTP status code 400 - Bad format.
+ReferenceId	String	Body	Mandatory client specified reference id for the subscription. This parameter must only contain alphanumberic characters as well as - (dash) and _ (underscore). Cannot start with _. It is case insensitive. Max length is 50 characters.
+RefreshRate	Integer	Body	Optional custom refresh rate, measured in milliseconds, between each data update. Note that it is not possible to get a refresh rate lower than the rate specified in the customer service level agreement (SLA).
+ReplaceReferenceId	String	Body	Reference id of the subscription that should be replaced.
+Tag 	String	Body	: Optional client specified tag used for grouping subscriptions.
+Response Parameters
+View Response Codes
+
+HTTP Code	Description	
+201	Created	Created
+400	Bad Request	
+Error Code	Description
+InvalidAccountKey	AccountKey is not valid
+InvalidArguments	Arguments Are Not Provided
+InvalidClientKey	ClientKey is not valid
+InvalidModelState	One or more properties of the request are invalid!
+SequenceIdUnavailable	SequenceId Unavailable
+UnauthorizedAccountKey	User can not view activities for account
+UnauthorizedClientKey	User can not view activities for client
+UnsupportedSubscriptionFormat	Error code returned when a subscription format that isn't supported by the publisher is requested.
+401	Unauthorized	Indicates that the request was rejected because the 'Authorization' header was missing in the request or contained an invalid security token.
+409	Conflict	
+Error Code	Description
+SubscriptionLimitExceeded	Error code returned when more than the maximum allowed number of subscriptions for a specified type, is exceeded.
+429	Too Many Requests	The request was rejected due to rate limit being exceeded.
+503	Service Unavailable	Service Unavailable.
+
+Name	Type	Description
+ContextId	String	The streaming context id that this response is associated with.
+Format	String	The media type (RFC 2046), of the serialized data updates that are streamed to the client.
+InactivityTimeout	Integer	The time (in seconds) that the client should accept the subscription to be inactive before considering it invalid.
+ReferenceId	String	The reference id that (along with streaming context id and session id) identifies the subscription (within the context of a specific service/subscription type)
+RefreshRate	Integer	Actual refresh rate assigned to the subscription according to the customers SLA.
+Snapshot	ActivityResponseListResult	Snapshot of the current data on hand, when subscription was created.
+State	String	This property is kept for backwards compatibility.
+Tag 	String	: Client specified tag assigned to the subscription, if specified in the request.
+Streaming Response Parameters
+Name	Type	Description
+Data	ActivityResponse	The type of data transported by the DomainEvent instance (e.g. price update, position list update etc.).
+PartitionNumber	Integer	The partition number if this DomainEvent is a partition.
+ReferenceId	String	Client specified id, which is sent back to the client with every data update.
+Timestamp	UtcDateTime	The UTC date and time of the event.
+TotalPartitions	Integer	The total number of partitions if this DomainEvent is a partition.
+Request Example
+Request URL
+ /ens/v1/activities/subscriptions
+Request Body
+{
+  "Arguments": {
+    "ClientKey": "URpoxLBgX2I33Af3IhCvHg==",
+    "AccountKey": "mroYddvgiGqqudzBPn8daA==",
+    "AccountGroupKey": "mroYddvgiGqqudzBPn8daA==",
+    "IncludeSubAccounts": false,
+    "FromDateTime": "2015-02-02T01:02:03Z",
+    "Activities": [
+      "AccountFundings",
+      "MarginCalls",
+      "Orders",
+      "Positions"
+    ],
+    "SequenceId": "37456",
+    "FieldGroups": [
+      "DisplayAndFormat",
+      "ExchangeInfo"
+    ]
+  },
+  "ContextId": "Context_20260102094854999",
+  "ReferenceId": "M_344",
+  "RefreshRate": 0
+}
+Response Example
+Response body
+{
+  "Snapshot": {
+    "Data": []
+  },
+  "ContextId": "Context_20260102094855062",
+  "ReferenceId": "M_344",
+  "InactivityTimeout": 30,
+  "RefreshRate": 0,
+  "State": "Active"
+}
+Streaming Response Example
+Response body
+""
+
+############################################
+## Cancelled の公式定義（これが来たら“キャンセル”）
+############################################
+https://www.developer.saxo/openapi/referencedocs/ens/v1/clientactivities/get__ens_activities/schema-orderstatus
+Reference Docs  Datatypes  OrderStatus
+OrderStatus
+Represents order status
+
+Name	Description
+Cancelled	Order cancelled.
+Changed	Order changed.
+DoneForDay	Order is done for day.
+Expired	Order expired.
+Fill	Received fill on order.
+FinalFill	Received final fill on order.
+Parked	Order is Parked. Only applicable if 'Parked Order' functionality is configured for partner.
+Placed	Order placed.
+TrailingStopOrderMove	Movement in trailing Stop Order
+Example
+"Changed"
+
+############################################
+## ENS接続時の 409 / SubscriptionLimitExceeded ログ
+############################################
+https://www.developer.saxo/openapi/referencedocs/port/v1/orders/post__port__subscriptions
+Reference Docs  Portfolio  Orders
+Create a subscription to open orders
+Endpoint Url
+ https://gateway.saxobank.com/sim/openapi/port/v1/orders/subscriptions?$inlinecount={$inlinecount}&$skip={$skip}&$skiptoken={$skiptoken}&$top={$top}
+
+Endpoint Description
+Sets up a subscription and returns an initial snapshot of list of orders specified by the parameters in the request.
+
+Endpoint Access Level
+Required Permissions:
+Community : Subscribe
+Personal : Subscribe
+
+Endpoint Parameters
+Request parameters
+Name	Type	Origin	Description
+$inlinecount	String	Query-String	Specifies that the response to the request should include a count of the number of entries in the collection
+$skip	Integer	Query-String	The number of entries to skip from the beginning of the collection
+$skiptoken	String	Query-String	Specifies an entity id to start retrieving entries from. This is normally only used in generated nextlinks.
+$top	Integer	Query-String	The number of entries to return from the beginning of the collection
+Arguments	OpenOrdersRequest	Body	Arguments for the subscription request.
+ContextId	String	Body	The streaming context id that this request is associated with. This parameter must only contain letters (a-z) and numbers (0-9) as well as - (dash) and _ (underscore). It is case insensitive. Max length is 50 characters.
+Format	String	Body	Optional Media type (RFC 2046) of the serialized data updates that are streamed to the client. Currently only application/json and application/x-protobuf is supported. If an unrecognized format is specified, the subscription end point will return HTTP status code 400 - Bad format.
+ReferenceId	String	Body	Mandatory client specified reference id for the subscription. This parameter must only contain alphanumberic characters as well as - (dash) and _ (underscore). Cannot start with _. It is case insensitive. Max length is 50 characters.
+RefreshRate	Integer	Body	Optional custom refresh rate, measured in milliseconds, between each data update. Note that it is not possible to get a refresh rate lower than the rate specified in the customer service level agreement (SLA).
+ReplaceReferenceId	String	Body	Reference id of the subscription that should be replaced.
+Tag 	String	Body	: Optional client specified tag used for grouping subscriptions.
+Response Parameters
+View Response Codes
+HTTP Code	Description	
+201	Created	Created
+400	Bad Request	
+Error Code	Description
+InvalidClientId	Indicates that the requested client id was invalid.
+InvalidInput	An error was encountered when processing given input parameters.
+InvalidModelState	Error code returned when model state is invalid.
+NoValidInput	No valid input values passed.
+UnsupportedSubscriptionFormat	Error code returned when a subscription format that isn't supported by the publisher is requested.
+401	Unauthorized	Indicates that the request was rejected because the 'Authorization' header was missing in the request or contained an invalid security token.
+409	Conflict	
+Error Code	Description
+SubscriptionLimitExceeded	Error code returned when more than the maximum allowed number of subscriptions for a specified type, is exceeded.
+429	Too Many Requests	The request was rejected due to rate limit being exceeded.
+503	Service Unavailable	Service Unavailable.
+
+Name	Type	Description
+ContextId	String	The streaming context id that this response is associated with.
+Format	String	The media type (RFC 2046), of the serialized data updates that are streamed to the client.
+InactivityTimeout	Integer	The time (in seconds) that the client should accept the subscription to be inactive before considering it invalid.
+ReferenceId	String	The reference id that (along with streaming context id and session id) identifies the subscription (within the context of a specific service/subscription type)
+RefreshRate	Integer	Actual refresh rate assigned to the subscription according to the customers SLA.
+Snapshot	OrderResponseListResult	Snapshot of the current data on hand, when subscription was created.
+State	String	This property is kept for backwards compatibility.
+Tag 	String	: Client specified tag assigned to the subscription, if specified in the request.
+Streaming Response Parameters
+Name	Type	Description
+AccountId	String	The id of the account to which the net position belongs.
+AccountKey	AccountKey	Unique key of the account where the order is placed
+AdviceNote	String	Field for adviser to place relevant information.
+AlgoOrderData	StringStringKeyValuePair []	Additional order data for algorithmic orders.
+AlgoStrategyName	String	Type of algo order strategy.
+AllocationKeyId	String	Allocation Key
+Amount	Number	Order size
+Ask	Number	The current market ask price.
+AssetType	AssetType	The instrument asset type.
+Bid	Number	The current market bid price.
+BreakoutTriggerDownPrice	Number	Used for conditional BreakoutTrigger orders. Lower trigger price. If the instrument price falls below this level, a stop loss order will be activated.
+BreakoutTriggerUpPrice	Number	Used for conditional BreakoutTrigger orders. Upper trigger price. If the instrument price exceeds this level, a take profit limit order will be activated.
+BuySell	BuySell	Indicates if the order is Buy Or Sell.
+CalculationReliability	CalculationReliability	If an error was encountered this code indicates source of the calculation error.
+CashAmount	Number	The monetary/cash purchase amount, only used when OrderAmountType is ValueInInstrumentCurrency. When set, ignore order Amount.
+ClientId	String	Unique identifier of the client.
+ClientKey	ClientKey	Unique key of the client where the order is placed
+ClientName	String	The name of the client.
+ClientNote	String	The specific text instructions for the Trading Desk to better understand IAM users intentions for staging the order.
+CopiedPositionId	String	The ID of the position this order was copied from
+CorrelationKey	String	Correlation key
+CorrelationTypes	CorrelationType []	Type of the correlation
+CurrentPrice	Number	The user specific(delayed/realtime) current market price of the instrument.
+CurrentPriceDelayMinutes	Integer	If set, it defines the number of minutes by which the price is delayed.
+CurrentPriceLastTraded	UtcDateTime	Indicates when the user specific current market price of the instrument was last traded.
+CurrentPriceType	PriceType	The price type (Bid/Ask/LastTraded) of the user specific(delayed/realtime) current market price of the instrument.
+DecisionMakerUserId	String	Returns decision maker Id, set when placing orders on behalf of other user
+DisplayAndFormat	InstrumentDisplayAndFormat	Information about the instrument and how to display it.
+DistanceToMarket	Number	Distance to market for this order. (Dynamically updating)
+Duration	OrderDuration	The time frame during which the order is valid. If the OrderDurationType is GTD, then an ExpiryDate must also be provided.
+Exchange	InstrumentExchangeDetails	Information about the instrument's exchange and trading status.
+ExpiryDate	UtcDateTime	The ExpiryDate. Valid for options and futures.
+ExternalReference	String	Gets or sets the Client order reference id.
+FilledAmount	Number	The amount of the order, which has already been filled, in case of partial fills.
+Greeks	Greeks	Greeks for option(s) i.e. FX Option, Contract Options and Contract Options CFD .
+IpoFinancingAmountPct	Number	Financing Amount Pct for IPO orders
+IpoSubscriptionFee	Number	Subscription fee for IPO orders
+IsForceOpen	Boolean	If True, the order's resulting position will not automatically be netted with position(s) in the opposite direction
+IsMarketOpen	Boolean	True if the instrument is currently tradable on its exchange.
+MarketPrice	Number	Current trading price of instrument. (Dynamically updating)
+MarketState	MarketState	Market state of exchange for instrument
+MarketValue	Number	Market value of position excl. closing costs.
+MultiLegOrderDetails	MultiLegOrderDetails	Common properties for multi-leg (strategy) orders.
+NonTradableReason	NonTradableReasons	Non tradable reason.
+OpenInterest	Number	The total number of contracts that have not been settled and remain open as of the end of a trading day.
+OpenOrderType	OrderType	Specifies the Order Type.
+OptionsData	OrderOptionsData	Details for options, warrants and structured products.
+OrderAmountType	OrderAmountType	Indicates if the order Amount is specified as lots/shares/contracts or as a monetary purchase amount in instrument currency.
+OrderId	String	Unique Id of the order.
+OrderRelation	OpenOrderRelation	Relation to other active orders.
+OrderTime	UtcDateTime	The UTC date and time the order was placed
+OwnerId	String	Client id of the client's owner. Only set when relevant.
+Price	Number	Price at which the order is triggered.
+RelatedOpenOrders	RelatedOrderInfo []	List of information about related open orders. There should be enough information that the UI can show the price of the order, and calculate distance to market.
+RelatedPositionId	String	Id of the related position.
+ShortTrading	ShortTrading	Short trading allowed or not on instrument
+SleepingOrderCondition	SleepingOrderCondition	Represent the condition on sleeping order.
+Status	OrderStatus	Current status of the order
+StopLimitPrice	Number	Secondary price level for StopLimit orders.
+SwitchInstrumentName	String	Name of 'SwitchInstrumentUic'/&gt;.
+SwitchInstrumentUic	Integer	Mutual funds only. When set, instructs the order is to switch (transfer) the value of a matching open position into the specified "switch" instrument (UIC).
+ToOpenClose	ToOpenClose	Whether the position should be created to open/increase or close/decrease a position.
+TradeIdeaId	String	The ID of the TradeMaker recommendation.
+TradingStatus	TradingStatus	Instrument is tradable or not
+TrailingStopDistanceToMarket	Number	Distance to market for a trailing stop order.
+TrailingStopStep	Number	Step size for trailing stop order.
+TriggerParentOrderId	String	Order id of related conditional order that controls placement/activation of this order.
+TriggerPriceType	OrderTriggerPriceType	Type of price chosen to trigger a conditional order.
+Uic	Integer	Unique Id of the instrument
+ValueDate	UtcDateTime	The value date (only for FxForwards).
+Request Example
+Request URL
+ /port/v1/orders/subscriptions?$inlinecount=AllPages&$skip=1&$skiptoken=B17D8890-3C7A-4A47-A9AA-01B022ED03A5&$top=1
+Request Body
+{
+  "Arguments": {
+    "AccountGroupKey": "LZTc7DdejXODf-WSl2aCyQ==",
+    "AccountKey": "LZTc7DdejXODf-WSl2aCyQ==",
+    "ClientKey": "7m4I|vtYLUnEGg77o9uQhw=="
+  },
+  "ContextId": "20260105105036256",
+  "Format": "application/json",
+  "ReferenceId": "O10341",
+  "RefreshRate": 5,
+  "Tag": "PAGE1"
+}
+Response Example
+Response body
+{
+  "Format": "application/json",
+  "InactivityTimeout": 120,
+  "ReferenceId": "O51981",
+  "RefreshRate": 1000,
+  "Snapshot": {
+    "Data": [
+      {
+        "AccountId": "192134INET",
+        "AccountKey": "LZTc7DdejXODf-WSl2aCyQ==",
+        "Amount": 250000,
+        "AssetType": "FxSpot",
+        "BuySell": "Buy",
+        "CalculationReliability": "Ok",
+        "ClientKey": "7m4I|vtYLUnEGg77o9uQhw==",
+        "CurrentPrice": 1.09062,
+        "CurrentPriceDelayMinutes": 0,
+        "CurrentPriceType": "Ask",
+        "DistanceToMarket": 0.04062,
+        "Duration": {
+          "DurationType": "GoodTillCancel"
+        },
+        "IsExtendedHoursEnabled": false,
+        "IsForceOpen": false,
+        "IsMarketOpen": false,
+        "MarketPrice": 1.09062,
+        "NonTradableReason": "None",
+        "OpenOrderType": "Limit",
+        "OrderAmountType": "Quantity",
+        "OrderId": "49318458",
+        "OrderRelation": "StandAlone",
+        "OrderTime": "2017-04-12T07:56:00Z",
+        "Price": 1.05,
+        "PriceWithoutSpread": 1.04,
+        "Status": "Working",
+        "Uic": 21
+      }
+    ]
+  },
+  "State": "Active"
+}
+Streaming Response Example
+Response body
+{
+  "AccountId": "192134INET",
+  "AccountKey": "LZTc7DdejXODf-WSl2aCyQ==",
+  "Amount": 250000,
+  "AssetType": "FxSpot",
+  "BuySell": "Buy",
+  "CalculationReliability": "Ok",
+  "ClientKey": "7m4I|vtYLUnEGg77o9uQhw==",
+  "CurrentPrice": 1.09062,
+  "CurrentPriceDelayMinutes": 0,
+  "CurrentPriceType": "Ask",
+  "DistanceToMarket": 0.04062,
+  "Duration": {
+    "DurationType": "GoodTillCancel"
+  },
+  "IsForceOpen": false,
+  "IsMarketOpen": false,
+  "MarketPrice": 1.09062,
+  "NonTradableReason": "None",
+  "OpenOrderType": "Limit",
+  "OrderAmountType": "Quantity",
+  "OrderId": "49318458",
+  "OrderRelation": "StandAlone",
+  "OrderTime": "2017-04-12T07:56:00+00:00",
+  "Price": 1.05,
+  "Status": "Working",
+  "Uic": 21
+}
+
+############################################
+## 409を潰すための「片付け」URL（参考：複数購読の削除）
+############################################
+https://www.developer.saxo/openapi/referencedocs/root/v1/subscriptions
+Reference Docs  Root Services
+Subscriptions
+Central Subscriptions Management (CSM) providing broadcast commanding such as delete of multiple subscriptions in a single request.
+
+Endpoints
+Remove multiple active subscriptions
+Removes multiple subscriptions for the current session, and frees all resources on the server.
+
+ https://gateway.saxobank.com/sim/openapi/root/v1/subscriptions/{ContextId}?Tag={Tag}
+
+############################################
+## 
 ############################################
 ############################################
-########## ポジションと注文の監視１ ##########
+## 
 ############################################
