@@ -492,6 +492,7 @@ class SaxoClient:
         self.streaming_context_id: Optional[str] = None
         self.ens_subscription_id: Optional[str] = None
         self.streaming_authorize_enabled: bool = cfg.streaming_authorize_enabled
+        self.related_order_labels: Dict[str, str] = {}
 
         log(
             f"[ENV] {self.env_name} selected. API_BASE={self.base_url} AUTH={self.auth_endpoint} "
@@ -1096,6 +1097,17 @@ class SaxoClient:
         quant = Decimal(f"1e-{decimals_int}")
         return float(Decimal(str(value)).quantize(quant, rounding=ROUND_HALF_UP))
 
+    @staticmethod
+    def _infer_tp_sl_label(order_type: Optional[str]) -> str:
+        if not order_type:
+            return "TP/SL"
+        order_type_lower = str(order_type).lower()
+        if order_type_lower.startswith("limit"):
+            return "TP"
+        if order_type_lower.startswith("stop"):
+            return "SL"
+        return "TP/SL"
+
     def place_market_order_with_sl_tp(
         self,
         uic: int,
@@ -1176,6 +1188,14 @@ class SaxoClient:
                 log(f"関連注文を確認: {len(related_orders)}件")
                 for idx, related in enumerate(related_orders):
                     if isinstance(related, dict):
+                        related_order_id = related.get("OrderId")
+                        related_order_type = related.get("OrderType")
+                        if related_order_id:
+                            label = self._infer_tp_sl_label(related_order_type)
+                            self.related_order_labels[str(related_order_id)] = label
+                            log(
+                                f"✅ {label}注文が成立: OrderId={related_order_id}, Type={related_order_type}"
+                            )
                         log(
                             "  関連注文{idx}: OrderId={order_id}, Status={status}, Type={order_type}".format(
                                 idx=idx + 1,
@@ -1818,6 +1838,8 @@ class SaxoENSClient:
 
         status = event_data.get("Status", "").lower()
         sub_status = event_data.get("SubStatus", "").lower()
+        order_id = str(event_data.get("OrderId", ""))
+        related_label = self.saxo_client.related_order_labels.get(order_id)
 
         if status in ["fill", "finalfill"] and sub_status == "confirmed":
             amount = Decimal(str(event_data.get("Amount", "0")))
@@ -1826,7 +1848,11 @@ class SaxoENSClient:
 
             is_complete_fill = status == "finalfill" or (amount > 0 and filled_amount >= amount)
             if is_complete_fill and execution_price is not None:
-                order_id = str(event_data.get("OrderId", ""))
+                if related_label:
+                    self._log(
+                        f"🎯 {related_label}に到達し約定: OrderID={order_id}, Price={execution_price}"
+                    )
+                    self.saxo_client.related_order_labels.pop(order_id, None)
                 self._log(f"✨ ENSから注文完全約定イベント: OrderID={order_id}, Price={execution_price}")
                 await self.saxo_client.ens_event_queue.put(
                     {
@@ -1842,11 +1868,14 @@ class SaxoENSClient:
                     }
                 )
         elif status in ["canceled", "cancelled", "rejected", "expired"]:
+            if related_label:
+                self._log(f"🧹 {related_label}注文がキャンセル: OrderID={order_id}, Status={status}")
+                self.saxo_client.related_order_labels.pop(order_id, None)
             self._log(f"ENSから注文ステータス変更イベント: OrderID={event_data.get('OrderId')}, Status={status}")
             await self.saxo_client.ens_event_queue.put(
                 {
                     "type": "order_status_change",
-                    "order_id": str(event_data.get("OrderId", "")),
+                    "order_id": order_id,
                     "status": status,
                     "uic": event_data.get("Uic"),
                 }
