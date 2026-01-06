@@ -1250,18 +1250,38 @@ class SaxoClient:
             "ExternalReference": external_reference,
         }
 
+        related_orders: List[Dict[str, Any]] = []
+        related_buy_sell = "Sell" if buy_sell == "Buy" else "Buy"
+
         if stop_loss_pips > 0:
-            body["StopLossOnFill"] = {
-                "OrderType": "Stop",
-                "OrderPrice": self._round_price(sl_price, display),
-                "OrderDuration": {"DurationType": "GoodTillCancel"},
-            }
+            related_orders.append(
+                {
+                    "Uic": uic,
+                    "AssetType": "FxSpot",
+                    "BuySell": related_buy_sell,
+                    "Amount": float(amount),
+                    "OrderType": "Stop",
+                    "OrderPrice": self._round_price(sl_price, display),
+                    "OrderDuration": {"DurationType": "GoodTillCancel"},
+                    "ManualOrder": False,
+                }
+            )
         if take_profit_pips > 0:
-            body["TakeProfitOnFill"] = {
-                "OrderType": "Limit",
-                "OrderPrice": self._round_price(tp_price, display),
-                "OrderDuration": {"DurationType": "GoodTillCancel"},
-            }
+            related_orders.append(
+                {
+                    "Uic": uic,
+                    "AssetType": "FxSpot",
+                    "BuySell": related_buy_sell,
+                    "Amount": float(amount),
+                    "OrderType": "Limit",
+                    "OrderPrice": self._round_price(tp_price, display),
+                    "OrderDuration": {"DurationType": "GoodTillCancel"},
+                    "ManualOrder": False,
+                }
+            )
+
+        if related_orders:
+            body["Orders"] = related_orders
 
         data = self._make_request("POST", "/trade/v2/orders", json_data=body, retry_safe=False)
 
@@ -1694,46 +1714,6 @@ class SaxoClient:
                     order_id = str(order.get("OrderId"))
                     if order_id:
                         self.cancel_order(order_id, uic=uic)
-
-    def list_working_orders_by_uic(self, uic: int) -> List[Dict]:
-        endpoint = "/port/v1/orders"
-        params = {"AccountKey": self.account_key, "ClientKey": self.client_key, "Uics": str(uic), "$top": 100}
-        orders_data = self._make_request("GET", endpoint, params=params)
-        if not orders_data or "Data" not in orders_data:
-            return []
-        working_statuses = {"Working", "Placed", "Queued"}
-        return [order for order in orders_data["Data"] if order.get("Status") in working_statuses]
-
-    def cancel_order(self, order_id: str) -> bool:
-        if not order_id:
-            return False
-        endpoint = f"/trade/v2/orders/{order_id}"
-        params = {"AccountKey": self.account_key}
-        response = self._make_request("DELETE", endpoint, params=params)
-        if response is None:
-            log(f"注文キャンセルに失敗しました: OrderId={order_id}")
-            return False
-        log(f"注文キャンセルを実行しました: OrderId={order_id}")
-        return True
-
-    def cancel_related_orders_for_uic(self, uic: int) -> None:
-        working_orders = self.list_working_orders_by_uic(uic)
-        if not working_orders:
-            log(f"UIC {uic} のキャンセル対象注文はありません。")
-            return
-        cancel_candidates = []
-        for order in working_orders:
-            order_type = str(order.get("OrderType", "")).lower()
-            if order_type in {"limit", "stop", "stopiftraded", "stoplimit", "trailingstop"}:
-                cancel_candidates.append(order)
-        if not cancel_candidates:
-            log(f"UIC {uic} のTP/SL候補注文はありません。")
-            return
-        log(f"UIC {uic} のTP/SL候補注文を {len(cancel_candidates)} 件キャンセルします。")
-        for order in cancel_candidates:
-            order_id = str(order.get("OrderId"))
-            if order_id:
-                self.cancel_order(order_id)
 
     def find_order_by_external_reference(self, external_reference: str) -> Optional[Dict]:
         if not external_reference:
