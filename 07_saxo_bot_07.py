@@ -368,6 +368,43 @@ def _cleanup_old_logs(log_dir: str, keep_days: int = 7) -> None:
         print(f"[{get_jst_time_str()}] ログファイルの整理に失敗しました: {e}")
 
 
+def _get_log_filename(now: Optional[datetime] = None) -> str:
+    if now is None:
+        now = datetime.now(TIMEZONE_TOKYO)
+    date_str = now.strftime("%Y%m%d")
+    weekday_map = {
+        0: "mon",
+        1: "tue",
+        2: "wed",
+        3: "thu",
+        4: "fri",
+        5: "fri",
+        6: "fri",
+    }
+    weekday = weekday_map.get(now.weekday(), "fri")
+    return f"saxo_fx_log_{date_str}_{weekday}.log"
+
+
+def _cleanup_old_logs(log_dir: str, keep_days: int = 7) -> None:
+    try:
+        cutoff_date = datetime.now(TIMEZONE_TOKYO).date() - timedelta(days=keep_days - 1)
+        for filename in os.listdir(log_dir):
+            if not filename.startswith("saxo_fx_log_") or not filename.endswith(".log"):
+                continue
+            parts = filename.split("_")
+            if len(parts) < 4:
+                continue
+            date_part = parts[3]
+            try:
+                file_date = datetime.strptime(date_part, "%Y%m%d").date()
+            except ValueError:
+                continue
+            if file_date < cutoff_date:
+                os.remove(os.path.join(log_dir, filename))
+    except Exception as e:
+        print(f"[{get_jst_time_str()}] ログファイルの整理に失敗しました: {e}")
+
+
 def extract_hms_jst(ts: Optional[str]) -> str:
     if not ts:
         return "N/A"
@@ -537,6 +574,7 @@ class SaxoClient:
         self.ens_subscription_id: Optional[str] = None
         self.streaming_authorize_enabled: bool = cfg.streaming_authorize_enabled
         self.related_order_labels: Dict[str, str] = {}
+        self.tp_sl_order_ids_by_uic: Dict[int, set] = {}
 
         log(
             f"[ENV] {self.env_name} selected. API_BASE={self.base_url} AUTH={self.auth_endpoint} "
@@ -1244,6 +1282,7 @@ class SaxoClient:
                         if related_order_id:
                             label = self._infer_tp_sl_label(related_order_type)
                             self.related_order_labels[str(related_order_id)] = label
+                            self.tp_sl_order_ids_by_uic.setdefault(uic, set()).add(str(related_order_id))
                             log(
                                 f"✅ {label}注文が成立: OrderId={related_order_id}, Type={related_order_type}"
                             )
@@ -1588,6 +1627,73 @@ class SaxoClient:
         except Exception as e:
             log(f"既存取引確認中にエラー: {e}")
             return True, None
+
+    def list_working_orders_by_uic(self, uic: int) -> List[Dict]:
+        endpoint = "/port/v1/orders"
+        params = {"AccountKey": self.account_key, "ClientKey": self.client_key, "Uics": str(uic), "$top": 100}
+        orders_data = self._make_request("GET", endpoint, params=params)
+        if not orders_data or "Data" not in orders_data:
+            return []
+        working_statuses = {"Working", "Placed", "Queued"}
+        return [order for order in orders_data["Data"] if order.get("Status") in working_statuses]
+
+    def cancel_order(self, order_id: str, uic: Optional[int] = None) -> bool:
+        if not order_id:
+            return False
+        endpoint = f"/trade/v2/orders/{order_id}"
+        params = {"AccountKey": self.account_key}
+        response = self._make_request("DELETE", endpoint, params=params)
+        if response is None:
+            log(f"注文キャンセルに失敗しました: OrderId={order_id}")
+            return False
+        log(f"注文キャンセルを実行しました: OrderId={order_id}")
+        if uic is not None:
+            self.tp_sl_order_ids_by_uic.get(uic, set()).discard(str(order_id))
+        return True
+
+    def _get_tp_sl_working_orders(self, uic: int, working_orders: List[Dict]) -> List[Dict]:
+        saved_ids = self.tp_sl_order_ids_by_uic.get(uic, set())
+        if not saved_ids:
+            return []
+        return [order for order in working_orders if str(order.get("OrderId")) in saved_ids]
+
+    def cancel_related_orders_for_uic(self, uic: int) -> None:
+        working_orders = self.list_working_orders_by_uic(uic)
+        if not working_orders:
+            log(f"UIC {uic} のキャンセル対象注文はありません。")
+            return
+        cancel_candidates = self._get_tp_sl_working_orders(uic, working_orders)
+        if not cancel_candidates:
+            log(f"UIC {uic} のTP/SL候補注文はありません。")
+            return
+
+        log(f"UIC {uic} のTP/SL候補注文を {len(cancel_candidates)} 件キャンセルします。")
+        failed_ids = set()
+        for order in cancel_candidates:
+            order_id = str(order.get("OrderId"))
+            if not order_id:
+                continue
+            if not self.cancel_order(order_id, uic=uic):
+                failed_ids.add(order_id)
+
+        if failed_ids:
+            log(f"TP/SLキャンセル失敗検知: {len(failed_ids)} 件。再確認します。")
+            working_orders = self.list_working_orders_by_uic(uic)
+            remaining = self._get_tp_sl_working_orders(uic, working_orders)
+            retry_ids = {str(order.get("OrderId")) for order in remaining if order.get("OrderId")}
+            if retry_ids:
+                log(f"TP/SLキャンセル再試行を実行します: {len(retry_ids)} 件")
+                for order_id in retry_ids:
+                    self.cancel_order(order_id, uic=uic)
+
+            working_orders = self.list_working_orders_by_uic(uic)
+            remaining = self._get_tp_sl_working_orders(uic, working_orders)
+            if remaining:
+                log(f"TP/SLが残存しているため全注文キャンセルを実行します: {len(working_orders)} 件")
+                for order in working_orders:
+                    order_id = str(order.get("OrderId"))
+                    if order_id:
+                        self.cancel_order(order_id, uic=uic)
 
     def list_working_orders_by_uic(self, uic: int) -> List[Dict]:
         endpoint = "/port/v1/orders"
@@ -1944,6 +2050,8 @@ class SaxoENSClient:
                         f"🎯 {related_label}に到達し約定: OrderID={order_id}, Price={execution_price}"
                     )
                     self.saxo_client.related_order_labels.pop(order_id, None)
+                    for uic, order_ids in self.saxo_client.tp_sl_order_ids_by_uic.items():
+                        order_ids.discard(order_id)
                 self._log(f"✨ ENSから注文完全約定イベント: OrderID={order_id}, Price={execution_price}")
                 await self.saxo_client.ens_event_queue.put(
                     {
@@ -1962,6 +2070,8 @@ class SaxoENSClient:
             if related_label:
                 self._log(f"🧹 {related_label}注文がキャンセル: OrderID={order_id}, Status={status}")
                 self.saxo_client.related_order_labels.pop(order_id, None)
+                for uic, order_ids in self.saxo_client.tp_sl_order_ids_by_uic.items():
+                    order_ids.discard(order_id)
             self._log(f"ENSから注文ステータス変更イベント: OrderID={event_data.get('OrderId')}, Status={status}")
             await self.saxo_client.ens_event_queue.put(
                 {
