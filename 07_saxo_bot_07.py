@@ -541,6 +541,7 @@ class SaxoClient:
         self._ens_event_backlog: collections.deque = collections.deque(maxlen=100)
         self.streaming_context_id: Optional[str] = None
         self.ens_subscription_id: Optional[str] = None
+        self.ens_reference_id: Optional[str] = None
         self.streaming_authorize_enabled: bool = cfg.streaming_authorize_enabled
         self.related_order_labels: Dict[str, str] = {}
         self.tp_sl_order_ids_by_uic: Dict[int, set] = {}
@@ -649,10 +650,11 @@ class SaxoClient:
         endpoint = "/ens/v1/activities/subscriptions"
 
         context_id = self.generate_streaming_context_id()
+        reference_id = f"ENS_OrderPos_{secrets.token_urlsafe(8)}"
 
         subscription_payload = {
             "ContextId": context_id,
-            "ReferenceId": f"ENS_OrderPos_{secrets.token_urlsafe(8)}",
+            "ReferenceId": reference_id,
             "Arguments": {"Activities": ["Orders", "Positions"], "AccountKey": self.account_key, "ClientKey": self.client_key},
         }
 
@@ -662,6 +664,7 @@ class SaxoClient:
             return None
 
         self.ens_subscription_id = response.get("SubscriptionId") if isinstance(response, dict) else None
+        self.ens_reference_id = reference_id
 
         websocket_url = self._build_streaming_ws_url(context_id)
         log(f"ENS WebSocket URL: {self._mask_ws_url_for_log(websocket_url)}")
@@ -677,6 +680,7 @@ class SaxoClient:
             return False
         log(f"ENSサブスクリプションを削除しました: {self.ens_subscription_id}")
         self.ens_subscription_id = None
+        self.ens_reference_id = None
         return True
 
     def rebuild_streaming_url(self, message_id: Optional[int] = None) -> Optional[str]:
@@ -950,7 +954,7 @@ class SaxoClient:
         try:
             response = requests.post(token_url, data=payload, headers=headers, timeout=20)
             if response.status_code != 200:
-                log(f"トークン交換HTTPエラー: {response.status_code} - {response.text[:200]}")
+                log(f"トークン交換HTTPエラー: {response.status_code}")
             response.raise_for_status()
             token_data = response.json()
             self.access_token = token_data["access_token"]
@@ -963,8 +967,6 @@ class SaxoClient:
             return True
         except requests.exceptions.RequestException as e:
             log(f"トークン交換エラー: {e}")
-            if hasattr(e, "response") and e.response is not None:
-                log(f"トークン交換レスポンス内容(一部): {e.response.text[:300]}")
             return False
 
     def refresh_access_token(self) -> bool:
@@ -987,11 +989,14 @@ class SaxoClient:
                         log("リフレッシュトークンが無効です。完全な再認証が必要です。")
                         return False
 
-                    if response.status_code != 200:
-                        log(f"トークン更新HTTPエラー: {response.status_code} - {response.text[:200]}")
+                    if response.status_code not in (200, 201):
+                        log(f"トークン更新HTTPエラー: {response.status_code}")
                     response.raise_for_status()
 
                     token_data = response.json()
+                    if "access_token" not in token_data:
+                        log("トークン更新レスポンスにaccess_tokenがありません。")
+                        return False
                     self.access_token = token_data["access_token"]
                     if "refresh_token" in token_data:
                         self.refresh_token = token_data["refresh_token"]
@@ -1001,8 +1006,6 @@ class SaxoClient:
 
                 except requests.exceptions.RequestException as e:
                     log(f"トークン更新エラー (試行 {attempt + 1}/3): {e}")
-                    if hasattr(e, "response") and e.response is not None:
-                        log(f"トークン更新レスポンス内容(一部): {e.response.text[:300]}")
 
                     if attempt < 2:
                         wait_time = (attempt + 1) * 5
@@ -1907,6 +1910,7 @@ class SaxoENSClient:
             return
 
         async def _reconnect_logic():
+            force_new = force_new_context
             reconnect_delay = 1
             max_reconnect_delay = CFG.ens_reconnect_max_delay_seconds
             self.reconnect_started_at = time.time()
@@ -1918,17 +1922,27 @@ class SaxoENSClient:
                 )
                 await asyncio.sleep(reconnect_delay)
                 try:
-                    if not force_new_context:
-                        refreshed = await asyncio.to_thread(self.saxo_client.refresh_access_token)
-                        if refreshed:
-                            await asyncio.to_thread(self.saxo_client.authorize_streaming_context)
-                            rebuilt = await asyncio.to_thread(self.saxo_client.rebuild_streaming_url, self.last_message_id)
-                            if rebuilt:
-                                self.ens_url = rebuilt
-                                await self.connect()
-                                if self.is_connected:
-                                    self._log("ENS WebSocketへの再接続に成功しました。")
-                                    break
+                    self._log(
+                        "ENS再接続開始: "
+                        f"force_new_context={force_new}, "
+                        f"contextId={self.saxo_client.streaming_context_id}, "
+                        f"messageid={self.last_message_id}"
+                    )
+                    refreshed = await asyncio.to_thread(self.saxo_client.refresh_access_token)
+                    if not refreshed:
+                        self._log("アクセストークンの更新に失敗しました。再認証が必要です。")
+                        self.shutdown_requested = True
+                        break
+
+                    if not force_new:
+                        await asyncio.to_thread(self.saxo_client.authorize_streaming_context)
+                        rebuilt = await asyncio.to_thread(self.saxo_client.rebuild_streaming_url, self.last_message_id)
+                        if rebuilt:
+                            self.ens_url = rebuilt
+                            await self.connect()
+                            if self.is_connected:
+                                self._log("ENS WebSocketへの再接続に成功しました。")
+                                break
 
                     self._log("ENSサブスクリプションを再作成します...")
                     new_ens_url = await asyncio.to_thread(self.saxo_client.setup_ens_subscription)
@@ -1950,7 +1964,7 @@ class SaxoENSClient:
                         deleted = await asyncio.to_thread(self.saxo_client.delete_ens_subscription)
                         if deleted:
                             self._log("サブスクリプション削除後に再試行します。")
-                force_new_context = False
+                force_new = False
 
                 reconnect_delay = min(reconnect_delay * 2, max_reconnect_delay)
                 reconnect_delay += random.uniform(0, 0.5)
@@ -1993,21 +2007,49 @@ class SaxoENSClient:
 
         return messages, data[off:]
 
-    def _handle_control_message(self, domain_message: Dict[str, Any], received_at: float) -> bool:
-        if domain_message.get("Reason"):
-            self.last_message_timestamp = received_at
-            reason = domain_message.get("Reason")
-            self._log(f"ENS制御メッセージ検出: Reason={reason}")
-            if reason in ["SubscriptionPermanentlyDisabled", "SessionLimitExceeded", "SubscriptionDisabled"]:
-                self._log("ENSハートビート: subscription系の停止を検出しました。再接続します。")
-                self.is_connected = False
-                return True
+    def _handle_control_message(
+        self, reference_id: Optional[str], domain_message: Dict[str, Any], received_at: float
+    ) -> bool:
+        ref = reference_id or domain_message.get("ReferenceId")
+        ref_lower = str(ref or "").lower()
+        if not ref_lower.startswith("_"):
             return False
 
-        message_type = str(domain_message.get("MessageType", "")).lower()
-        if message_type in ["disconnect", "reset", "reset-subscriptions", "resetsubscriptions"]:
-            self._log(f"ENS制御メッセージ検出: MessageType={message_type}")
+        self.last_message_timestamp = received_at
+
+        if ref_lower == "_heartbeat":
+            heartbeats = domain_message.get("Heartbeats")
+            if isinstance(heartbeats, list):
+                for heartbeat in heartbeats:
+                    if not isinstance(heartbeat, dict):
+                        continue
+                    reason = heartbeat.get("Reason")
+                    if reason:
+                        self._log(f"ENS制御メッセージ検出: Heartbeat Reason={reason}")
+                    if reason in ["SubscriptionPermanentlyDisabled", "SessionLimitExceeded", "SubscriptionDisabled"]:
+                        self._log("ENSハートビート: subscription系の停止を検出しました。再接続します。")
+                        self.is_connected = False
+                        self.saxo_client.delete_ens_subscription()
+                        return True
+            return True
+
+        if ref_lower == "_disconnect":
+            self._log("ENS制御メッセージ検出: _disconnect")
             self.is_connected = False
+            return True
+
+        if ref_lower == "_resetsubscriptions":
+            target_ids = domain_message.get("TargetReferenceIds")
+            should_reset = False
+            if not target_ids:
+                should_reset = True
+            elif isinstance(target_ids, list) and self.saxo_client.ens_reference_id:
+                should_reset = self.saxo_client.ens_reference_id in target_ids
+            if should_reset:
+                self._log("ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。")
+                self.is_connected = False
+                self.saxo_client.delete_ens_subscription()
+                return True
             return True
 
         return False
@@ -2018,28 +2060,28 @@ class SaxoENSClient:
             try:
                 message_raw = await self.ws.recv()
                 received_at = time.time()
-                json_payloads: List[str] = []
+                json_payloads: List[Tuple[Optional[str], str]] = []
                 if isinstance(message_raw, bytes):
                     buffer = self._binary_remainder + message_raw
                     try:
                         parsed_messages, remainder = self._extract_binary_messages(buffer)
                         self._binary_remainder = remainder
-                        for message_id, _ref_id, payload in parsed_messages:
+                        for message_id, ref_id, payload in parsed_messages:
                             self.last_message_id = message_id
                             if payload:
-                                json_payloads.append(payload)
+                                json_payloads.append((ref_id, payload))
                     except Exception as e:
                         self._log(f"バイナリメッセージの解析中に予期せぬエラー: {e}")
                         self._binary_remainder = b""
                         continue
                 else:
                     if message_raw:
-                        json_payloads = [message_raw]
+                        json_payloads = [(None, message_raw)]
 
                 if not json_payloads:
                     continue
 
-                for json_payload in json_payloads:
+                for reference_id, json_payload in json_payloads:
                     if not json_payload or not str(json_payload).strip():
                         continue
                     if isinstance(json_payload, str) and json_payload.startswith("_heartbeat"):
@@ -2052,13 +2094,13 @@ class SaxoENSClient:
                         control_handled = False
                         if isinstance(domain_message, dict):
                             self.last_message_summary = str(list(domain_message.keys()))
-                            if self._handle_control_message(domain_message, received_at):
+                            if self._handle_control_message(reference_id, domain_message, received_at):
                                 await self.reconnect()
                                 control_handled = True
                         elif isinstance(domain_message, list):
                             for item in domain_message:
-                                if isinstance(item, dict) and ("Reason" in item or "MessageType" in item):
-                                    if self._handle_control_message(item, received_at):
+                                if isinstance(item, dict):
+                                    if self._handle_control_message(reference_id, item, received_at):
                                         await self.reconnect()
                                         control_handled = True
                                         break
