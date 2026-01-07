@@ -1304,31 +1304,39 @@ class SaxoClient:
         related_buy_sell = "Sell" if buy_sell == "Buy" else "Buy"
 
         if stop_loss_pips > 0:
-            related_orders.append(
-                {
-                    "Uic": uic,
-                    "AssetType": "FxSpot",
-                    "BuySell": related_buy_sell,
-                    "Amount": float(amount),
-                    "OrderType": "Stop",
-                    "OrderPrice": self._round_price(sl_price, display),
-                    "OrderDuration": {"DurationType": "GoodTillCancel"},
-                    "ManualOrder": False,
-                }
-            )
+            sl_rounded = self._round_price(sl_price, display)
+            if sl_rounded > 0:
+                related_orders.append(
+                    {
+                        "Uic": uic,
+                        "AssetType": "FxSpot",
+                        "BuySell": related_buy_sell,
+                        "Amount": float(amount),
+                        "OrderType": "Stop",
+                        "OrderPrice": sl_rounded,
+                        "OrderDuration": {"DurationType": "GoodTillCancel"},
+                        "ManualOrder": False,
+                    }
+                )
+            else:
+                log(f"SL価格が無効です。SLをスキップします: sl_price={sl_price}, rounded={sl_rounded}")
         if take_profit_pips > 0:
-            related_orders.append(
-                {
-                    "Uic": uic,
-                    "AssetType": "FxSpot",
-                    "BuySell": related_buy_sell,
-                    "Amount": float(amount),
-                    "OrderType": "Limit",
-                    "OrderPrice": self._round_price(tp_price, display),
-                    "OrderDuration": {"DurationType": "GoodTillCancel"},
-                    "ManualOrder": False,
-                }
-            )
+            tp_rounded = self._round_price(tp_price, display)
+            if tp_rounded > 0:
+                related_orders.append(
+                    {
+                        "Uic": uic,
+                        "AssetType": "FxSpot",
+                        "BuySell": related_buy_sell,
+                        "Amount": float(amount),
+                        "OrderType": "Limit",
+                        "OrderPrice": tp_rounded,
+                        "OrderDuration": {"DurationType": "GoodTillCancel"},
+                        "ManualOrder": False,
+                    }
+                )
+            else:
+                log(f"TP価格が無効です。TPをスキップします: tp_price={tp_price}, rounded={tp_rounded}")
 
         if related_orders:
             body["Orders"] = related_orders
@@ -1737,7 +1745,11 @@ class SaxoClient:
             return
         cancel_candidates = self._get_tp_sl_working_orders(uic, working_orders)
         if not cancel_candidates:
-            log(f"UIC {uic} のTP/SL候補注文はありません。")
+            log(f"UIC {uic} のTP/SL候補注文はありません。追跡IDがないため全Working注文をキャンセルします。")
+            for order in working_orders:
+                order_id = str(order.get("OrderId"))
+                if order_id:
+                    self.cancel_order(order_id, uic=uic)
             return
 
         log(f"UIC {uic} のTP/SL候補注文を {len(cancel_candidates)} 件キャンセルします。")
