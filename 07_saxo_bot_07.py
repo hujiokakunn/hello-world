@@ -1860,6 +1860,10 @@ class SaxoENSClient:
             self._log(f"ENS WebSocket接続エラー: {e} ({type(e).__name__})")
             self.is_connected = False
             if getattr(e, "status_code", None) == 409:
+                try:
+                    await asyncio.to_thread(self.saxo_client.delete_ens_subscription)
+                except Exception as ex:
+                    self._log(f"ENS subscription削除中のエラー(無視して続行): {ex}")
                 await self.reconnect(force_new_context=True)
                 return
             await self.reconnect()
@@ -2054,6 +2058,17 @@ class SaxoENSClient:
 
         return False, False
 
+    async def _force_close_ws(self) -> None:
+        if not self.ws:
+            return
+        try:
+            await self.ws.close()
+        except Exception as e:
+            self._log(f"ENS WebSocket強制クローズ中にエラー: {e}")
+        finally:
+            self.ws = None
+            self.is_connected = False
+
     async def listen(self):
         self.last_message_timestamp = time.time()
         while self.is_connected:
@@ -2163,7 +2178,7 @@ class SaxoENSClient:
         order_id = str(event_data.get("OrderId", ""))
         related_label = self.saxo_client.related_order_labels.get(order_id)
 
-        if status in ["fill", "finalfill"] and sub_status == "confirmed":
+        if status in ["fill", "finalfill"] and (not sub_status or sub_status == "confirmed"):
             amount = Decimal(str(event_data.get("Amount", "0")))
             filled_amount = Decimal(str(event_data.get("FilledAmount", "0")))
             execution_price = event_data.get("ExecutionPrice")
@@ -2235,13 +2250,16 @@ class SaxoENSClient:
 
         if position_event == "deleted" or amount == Decimal("0"):
             self._log(f"ENSからポジションクローズイベントを受信しました: PositionID={position_id}, Event={position_event}")
+            uic = event_data.get("Uic")
+            if uic is not None:
+                await asyncio.to_thread(self.saxo_client.cancel_related_orders_for_uic, int(uic))
             await self.saxo_client._get_ens_event_queue().put(
                 {
                     "type": "position_closed",
                     "position_id": position_id,
                     "status": "closed",
                     "uic": event_data.get("Uic"),
-                    "execution_price": event_data.get("OpenPrice"),
+                    "execution_price": event_data.get("ExecutionPrice") or event_data.get("OpenPrice"),
                     "execution_time": event_data.get("ExecutionTime"),
                 }
             )
@@ -2251,7 +2269,7 @@ class SaxoENSClient:
                     "position_id": position_id,
                     "status": "closed",
                     "uic": event_data.get("Uic"),
-                    "execution_price": event_data.get("OpenPrice"),
+                    "execution_price": event_data.get("ExecutionPrice") or event_data.get("OpenPrice"),
                     "execution_time": event_data.get("ExecutionTime"),
                 }
             )
