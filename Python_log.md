@@ -1,859 +1,308 @@
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0866883425308593秒後 (試行2)
-[2026-01-06 21:40:28] アクセストークンを更新しています...
-[2026-01-06 21:40:29] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:40:29] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.110820584124073秒後 (試行2)
-[2026-01-06 21:40:33] アクセストークンを更新しています...
-[2026-01-06 21:40:34] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:40:34] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.228816881979593秒後 (試行2)
-[2026-01-06 21:40:38] アクセストークンを更新しています...
-[2026-01-06 21:40:39] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:40:39] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.028371256635001秒後 (試行2)
-[2026-01-06 21:40:43] アクセストークンを更新しています...
-[2026-01-06 21:40:44] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:40:44] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.1949447199630927秒後 (試行2)
-[2026-01-06 21:40:48] アクセストークンを更新しています...
-[2026-01-06 21:40:49] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:40:49] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.4238143094337876秒後 (試行2)
-[2026-01-06 21:40:54] アクセストークンを更新しています...
-[2026-01-06 21:40:55] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:40:55] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.448721033237981秒後 (試行2)
-[2026-01-06 21:40:59] アクセストークンを更新しています...
-[2026-01-06 21:41:00] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:00] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS接続監視モニターを開始します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.036486257351327秒後 (試行2)
-[2026-01-06 21:41:04] アクセストークンを更新しています...
-[2026-01-06 21:41:05] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:05] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.26473972066617秒後 (試行2)
-[2026-01-06 21:41:09] アクセストークンを更新しています...
-[2026-01-06 21:41:10] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:10] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.181210125853385秒後 (試行2)
-[2026-01-06 21:41:15] アクセストークンを更新しています...
-[2026-01-06 21:41:16] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:16] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.23283930861969秒後 (試行2)
-[2026-01-06 21:41:20] アクセストークンを更新しています...
-[2026-01-06 21:41:21] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:21] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.1039838599117817秒後 (試行2)
-[2026-01-06 21:41:25] アクセストークンを更新しています...
-[2026-01-06 21:41:26] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:26] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.320207705932035秒後 (試行2)
-[2026-01-06 21:41:30] アクセストークンを更新しています...
-[2026-01-06 21:41:31] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:31] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.239039172039047秒後 (試行2)
-[2026-01-06 21:41:35] アクセストークンを更新しています...
-[2026-01-06 21:41:36] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:36] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.2217745181787327秒後 (試行2)
-[2026-01-06 21:41:40] アクセストークンを更新しています...
-[2026-01-06 21:41:41] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:41] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.2584108594199765秒後 (試行2)
-[2026-01-06 21:41:45] アクセストークンを更新しています...
-[2026-01-06 21:41:46] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:46] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS接続監視モニターを開始します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.1311655533107037秒後 (試行2)
-[2026-01-06 21:41:50] アクセストークンを更新しています...
-[2026-01-06 21:41:51] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:51] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.3909055923198634秒後 (試行2)
-[2026-01-06 21:41:56] アクセストークンを更新しています...
-[2026-01-06 21:41:57] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:41:57] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.467542988573964秒後 (試行2)
-[2026-01-06 21:42:01] アクセストークンを更新しています...
-[2026-01-06 21:42:02] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:42:02] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.3506034531032616秒後 (試行2)
-[2026-01-06 21:42:07] アクセストークンを更新しています...
-[2026-01-06 21:42:09] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:42:09] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0337429480209055秒後 (試行2)
-[2026-01-06 21:42:13] アクセストークンを更新しています...
-[2026-01-06 21:42:14] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:42:14] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.3173151994501033秒後 (試行2)
-[2026-01-06 21:42:18] アクセストークンを更新しています...
-[2026-01-06 21:42:19] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:42:19] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.314488551050122秒後 (試行2)
-[2026-01-06 21:42:23] アクセストークンを更新しています...
-[2026-01-06 21:42:24] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:42:24] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.301323129054907秒後 (試行2)
-[2026-01-06 21:42:28] アクセストークンを更新しています...
-[2026-01-06 21:42:29] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:42:29] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.153444812310927秒後 (試行2)
-[2026-01-06 21:42:33] アクセストークンを更新しています...
-[2026-01-06 21:42:34] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:42:34] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.2293116035425498秒後 (試行2)
-[2026-01-06 21:42:38] アクセストークンを更新しています...
-[2026-01-06 21:42:40] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:42:40] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.254811021615113秒後 (試行2)
-[2026-01-06 21:42:45] アクセストークンを更新しています...
-[2026-01-06 21:42:46] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:42:46] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.222148629811334秒後 (試行2)
-[2026-01-06 21:42:50] アクセストークンを更新しています...
-[2026-01-06 21:42:51] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:42:51] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.2709091965471444秒後 (試行2)
-[2026-01-06 21:42:55] アクセストークンを更新しています...
-[2026-01-06 21:42:56] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:42:56] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0876997179654655秒後 (試行2)
-[2026-01-06 21:43:00] アクセストークンを更新しています...
-[2026-01-06 21:43:01] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:43:01] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0703388849100333秒後 (試行2)
-[2026-01-06 21:43:05] アクセストークンを更新しています...
-[2026-01-06 21:43:05] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:43:05] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.1145530141489584秒後 (試行2)
-[2026-01-06 21:43:10] アクセストークンを更新しています...
-[2026-01-06 21:43:10] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:43:10] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.2215796148579505秒後 (試行2)
-[2026-01-06 21:43:15] アクセストークンを更新しています...
-[2026-01-06 21:43:18] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:43:18] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.4223935602190325秒後 (試行2)
-[2026-01-06 21:43:23] アクセストークンを更新しています...
-[2026-01-06 21:43:25] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:43:25] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.385023604215991秒後 (試行2)
-[2026-01-06 21:43:29] アクセストークンを更新しています...
-[2026-01-06 21:43:30] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:43:30] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.324530246102278秒後 (試行2)
-[2026-01-06 21:43:35] アクセストークンを更新しています...
-[2026-01-06 21:43:36] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:43:36] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.447101634525849秒後 (試行2)
-[2026-01-06 21:43:41] アクセストークンを更新しています...
-[2026-01-06 21:43:42] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:43:42] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.2379589784982366秒後 (試行2)
-[2026-01-06 21:43:46] アクセストークンを更新しています...
-[2026-01-06 21:43:48] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:43:48] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.044051177052199秒後 (試行2)
-[2026-01-06 21:43:52] アクセストークンを更新しています...
-[2026-01-06 21:43:54] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:43:54] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.4841196934956877秒後 (試行2)
-[2026-01-06 21:43:59] アクセストークンを更新しています...
-[2026-01-06 21:44:00] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:44:00] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0269623542205224秒後 (試行2)
-[2026-01-06 21:44:04] アクセストークンを更新しています...
-[2026-01-06 21:44:07] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:44:07] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0008812457820238秒後 (試行2)
-[2026-01-06 21:44:11] アクセストークンを更新しています...
-[2026-01-06 21:44:12] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:44:12] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.2177187647932914秒後 (試行2)
-[2026-01-06 21:44:17] アクセストークンを更新しています...
-[2026-01-06 21:44:17] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:44:17] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0700989539988135秒後 (試行2)
-[2026-01-06 21:44:22] アクセストークンを更新しています...
-[2026-01-06 21:44:22] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:44:22] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0670757432905074秒後 (試行2)
-[2026-01-06 21:44:27] アクセストークンを更新しています...
-[2026-01-06 21:44:27] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:44:27] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.3483785249822993秒後 (試行2)
-[2026-01-06 21:44:32] アクセストークンを更新しています...
-[2026-01-06 21:44:33] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:44:33] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.2769970827178168秒後 (試行2)
-[2026-01-06 21:44:37] アクセストークンを更新しています...
-[2026-01-06 21:44:39] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:44:39] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.437355348518794秒後 (試行2)
-[2026-01-06 21:44:43] アクセストークンを更新しています...
-[2026-01-06 21:44:44] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:44:44] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.1762400472336854秒後 (試行2)
-[2026-01-06 21:44:48] アクセストークンを更新しています...
-[2026-01-06 21:44:49] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:44:49] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.303898861475938秒後 (試行2)
-[2026-01-06 21:44:54] アクセストークンを更新しています...
-[2026-01-06 21:44:55] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:44:55] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0651987029059353秒後 (試行2)
-[2026-01-06 21:44:59] アクセストークンを更新しています...
-[2026-01-06 21:45:00] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:00] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.296042686871332秒後 (試行2)
-[2026-01-06 21:45:05] アクセストークンを更新しています...
-[2026-01-06 21:45:06] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:06] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.3138169486653193秒後 (試行2)
-[2026-01-06 21:45:10] アクセストークンを更新しています...
-[2026-01-06 21:45:11] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:11] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.3894525666071496秒後 (試行2)
-[2026-01-06 21:45:15] アクセストークンを更新しています...
-[2026-01-06 21:45:16] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:16] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.096212894813233秒後 (試行2)
-[2026-01-06 21:45:20] アクセストークンを更新しています...
-[2026-01-06 21:45:21] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:21] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS接続監視モニターを開始します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.1988417703316276秒後 (試行2)
-[2026-01-06 21:45:25] アクセストークンを更新しています...
-[2026-01-06 21:45:26] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:26] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.4669028615360564秒後 (試行2)
-[2026-01-06 21:45:31] アクセストークンを更新しています...
-[2026-01-06 21:45:31] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:31] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.265383743423624秒後 (試行2)
-[2026-01-06 21:45:36] アクセストークンを更新しています...
-[2026-01-06 21:45:37] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:37] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.4852830711428417秒後 (試行2)
-[2026-01-06 21:45:41] アクセストークンを更新しています...
-[2026-01-06 21:45:42] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:42] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.437387934110814秒後 (試行2)
-[2026-01-06 21:45:47] アクセストークンを更新しています...
-[2026-01-06 21:45:47] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:47] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0425314504370746秒後 (試行2)
-[2026-01-06 21:45:52] アクセストークンを更新しています...
-[2026-01-06 21:45:52] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:52] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.1929025390530508秒後 (試行2)
-[2026-01-06 21:45:57] アクセストークンを更新しています...
-[2026-01-06 21:45:57] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:45:57] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS接続監視モニターを開始します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.016532346680901秒後 (試行2)
-[2026-01-06 21:46:02] アクセストークンを更新しています...
-[2026-01-06 21:46:03] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:46:03] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.403902961645468秒後 (試行2)
-[2026-01-06 21:46:07] アクセストークンを更新しています...
-[2026-01-06 21:46:08] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:46:08] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0277688138048995秒後 (試行2)
-[2026-01-06 21:46:12] アクセストークンを更新しています...
-[2026-01-06 21:46:13] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:46:13] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.152305368416512秒後 (試行2)
-[2026-01-06 21:46:17] アクセストークンを更新しています...
-[2026-01-06 21:46:18] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:46:18] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.2222438735038628秒後 (試行2)
-[2026-01-06 21:46:24] アクセストークンを更新しています...
-[2026-01-06 21:46:24] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:46:24] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.2510729109113563秒後 (試行2)
-[2026-01-06 21:46:29] アクセストークンを更新しています...
-[2026-01-06 21:46:30] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:46:30] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.377144192414129秒後 (試行2)
-[2026-01-06 21:46:35] アクセストークンを更新しています...
-[2026-01-06 21:46:35] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:46:35] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.0301048644703665秒後 (試行2)
-[2026-01-06 21:46:39] アクセストークンを更新しています...
-[2026-01-06 21:46:40] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:46:40] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.461126570432409秒後 (試行2)
-[2026-01-06 21:46:45] アクセストークンを更新しています...
-[2026-01-06 21:46:46] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:46:46] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.110382646897851秒後 (試行2)
-[2026-01-06 21:46:50] アクセストークンを更新しています...
-[2026-01-06 21:46:51] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:46:51] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.380508885332969秒後 (試行2)
-[2026-01-06 21:46:55] アクセストークンを更新しています...
-[2026-01-06 21:46:56] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:46:56] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.02639125061954秒後 (試行2)
-[2026-01-06 21:47:00] アクセストークンを更新しています...
-[2026-01-06 21:47:02] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:47:02] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS制御メッセージ検出: _resetsubscriptions 対象。再接続します。
-ENS WebSocketに再接続を試みています... 1秒後 (試行1)
-ENS再接続プロセス中にエラー: cannot access local variable 'force_new_context' where it is not associated with a value
-ENS WebSocketに再接続を試みています... 2.2955984959829876秒後 (試行2)
-[2026-01-06 21:47:06] アクセストークンを更新しています...
-[2026-01-06 21:47:07] トークン更新HTTPエラー: 201 - {"access_token":"eyJhbGciOiJFUzI1NiIsIng1dCI6IjY3NEM0MjFEMzZEMUE1OUNFNjFBRTIzMjMyOTVFRTAyRTc3MDMzNTkifQ.eyJvYWEiOiI3Nzc3MCIsImlzcyI6Im9hIiwiYWlkIjoiNzQ5MiIsInVpZCI6IkJsV2lGd3I5NGhrN09JVkM0cUxiNlE9PSIs
-[2026-01-06 21:47:07] アクセストークンを正常に更新しました。
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7701867933-kaicw3dq&authorization=***&messageid=0
-c:\Users\admin\OneDrive\ドキュメント\アノマリーFX\SAXO\自分用Saxo\saxo_bot\07_saxo_bot_07.py:1863: DeprecationWarning: websockets.InvalidStatusCode is deprecated
-  except websockets.InvalidStatusCode as e:
-ENS WebSocket接続エラー: server rejected WebSocket connection: HTTP 504 (InvalidStatus)
-既に再接続処理が進行中です。
-ENSサブスクリプションを再作成します...
-[2026-01-06 21:47:09] ENSサブスクリプションを作成中...
-[2026-01-06 21:47:09] ストリーミング用ContextId生成: ctx-7703629697-fuv7wngj
-[2026-01-06 21:47:10] ENS WebSocket URL: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7703629697-fuv7wngj&authorization=***
-ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7703629697-fuv7wngj&authorization=***        
-ENS WebSocket接続成功
-ENS WebSocketへの再接続に成功しました。
-ENS接続監視モニターを開始します。
-ENS最終受信からの経過時間: 15.02秒
+PS C:\Users\admin\OneDrive\ドキュメント\アノマリーFX\SAXO\自分用Saxo\saxo_bot> python -u "c:\Users\admin\OneDrive\ドキュメント\アノマリーFX\SAXO\自分用Saxo\saxo_bot\07_saxo_bot_07.py"
+[2026-01-07 22:02:29] SAXO自動売買プログラム - 開始
+[2026-01-07 22:02:30] Discord通知を送信しました。ステータス: 204
+[2026-01-07 22:02:30] [ENV] SIM selected. API_BASE=https://gateway.saxobank.com/sim/openapi AUTH=https://sim.logonvalidation.net/authorize TOKEN=https://sim.logonvalidation.net/token STREAMING=wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws CLIENT_ID=****************************86a0
+[2026-01-07 22:02:30] OAuth認証フローを開始します...
+[2026-01-07 22:02:30] 指定されたパス C:\fx\saxo\msedgedriver.exe でのEdgeDriver起動に失敗: Message: Unable to obtain driver for MicrosoftEdge; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+。デフォルトパスを試します。
+
+DevTools listening on ws://127.0.0.1:56691/devtools/browser/c0ec5ebe-61c8-4f75-aa4e-40b6d16d536f
+[2026-01-07 22:02:32] Edge WebDriverが正常に作成されました。
+[2026-01-07 22:02:32] 認証URLに移動します: https://sim.logonvalidation.net/authorize?response_type=code&client_id=909675ea4b21493d8556c53b899786a0&redirect_uri=http%3A%2F%2Flocalhost%3A8083%2Fsaxo_sim&code_challenge=yTj1a5Xf5i_QGHuzJlMFTkf4N7uZdEWjN-Mhh8I9H_I&code_challenge_method=S256&scope=openid+TradeAccess+ReadTrading+ReadAccount&state=v6NXp6vMrPffuONTS62rjw
+[19336:1456:0107/220233.566:ERROR:chrome\browser\task_manager\providers\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a "Renderer" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/739782.
+[2026-01-07 22:02:35] ブラウザ経由でログインしてください。必要に応じてSMSコードを待機します (最大5分)。
+[19336:1456:0107/220235.473:ERROR:chrome\browser\task_manager\providers\fallback_task_provider.cc:126] Every renderer should have at least one task provided by a primary task provider. If a "Renderer" fallback task is shown, it is a bug. If you have repro steps, please file a new bug and tag it as a dependency of crbug.com/739782.
+[2026-01-07 22:02:35] ログイン情報を送信しました。リダイレクトを待機中: http://localhost:8083/saxo_sim
+[2026-01-07 22:02:51] リダイレクト先: http://localhost:8083/saxo_sim?code=%2A%2A%2A&state=%2A%2A%2A#/lst/1767790967783
+[2026-01-07 22:02:51] 認証コードを取得しました。
+[2026-01-07 22:02:53] 一時ディレクトリ C:\fx\saxo\edge_user_data_1767790950_183b1d1b を削除しました。
+[2026-01-07 22:02:53] 認証コードをトークンに交換しています...
+[2026-01-07 22:02:54] トークン交換HTTPエラー: 201
+[2026-01-07 22:02:54] アクセストークンを正常に取得しました。
+[2026-01-07 22:02:54] アカウントキーを取得しています...
+[2026-01-07 22:02:55] FX AccountKey: ********************6Q==, ClientKey: ********************6Q== を AccountId: 21294788 用に選択しました。
+[2026-01-07 22:02:55] 取引ID 0 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 1 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 2 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 3 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 4 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 5 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 6 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 7 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 8 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 9 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 10 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 11 は本日実行対象外のためスキップします (指定曜日: mon)
+[2026-01-07 22:02:55] 取引ID 12 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 13 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 14 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 15 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 16 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 17 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 18 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 19 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 20 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 21 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 22 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 23 は本日実行対象外のためスキップします (指定曜日: tue)
+[2026-01-07 22:02:55] 取引ID 36 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 37 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 38 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 39 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 40 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 41 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 42 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 43 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 44 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 45 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 46 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 47 は本日実行対象外のためスキップします (指定曜日: thu)
+[2026-01-07 22:02:55] 取引ID 48 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 取引ID 49 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 取引ID 50 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 取引ID 51 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 取引ID 52 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 取引ID 53 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 取引ID 54 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 取引ID 55 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 取引ID 56 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 取引ID 57 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 取引ID 58 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 取引ID 59 は本日実行対象外のためスキップします (指定曜日: fri)
+[2026-01-07 22:02:55] 'saxo_trades.csv' から本日実行対象の 12 件の取引を読み込み、時間順にソートしました。
+[2026-01-07 22:02:55] 通貨ペアのUICマップを取得しています...
+[2026-01-07 22:02:55] UICをマッピングしました: USD/JPY -> 42 (小数点以下桁数: 5)
+[2026-01-07 22:02:55] ENSサブスクリプションを作成中...
+[2026-01-07 22:02:55] ストリーミング用ContextId生成: ctx-7790975823-o2dyg17x
+[2026-01-07 22:02:56] ENS WebSocket URL: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7790975823-o2dyg17x&authorization=***
+[2026-01-07 22:02:56] ENSクライアントを起動しました。
+[2026-01-07 22:02:56] 口座残高を取得しています...ENS WebSocket接続中: wss://sim-streaming.saxobank.com/sim/oapi/streaming/ws/connect?contextId=ctx-7790975823-o2dyg17x&authorization=***
+
+[2026-01-07 22:02:56] 口座残高: 1007297.84 EUR
+[2026-01-07 22:02:56] 取引ID 24 は起動時に時刻が経過していたため、ステータスを更新します。
+[2026-01-07 22:02:56] 取引ID 25 は起動時に時刻が経過していたため、ステータスを更新します。
+[2026-01-07 22:02:56] 取引ID 26 は起動時に時刻が経過していたため、ステータスを更新します。
+[2026-01-07 22:02:56] 取引ID 27 は起動時に時刻が経過していたため、ステータスを更新します。
+[2026-01-07 22:02:56] 取引ID 28 は起動時に時刻が経過していたため、ステータスを更新します。
+[2026-01-07 22:02:56] 取引ID 29 は起動時に時刻が経過していたため、ステータスを更新します。
+[2026-01-07 22:02:56] 取引ID 30 は起動時に時刻が経過していたため、ステータスを更新します。
+[2026-01-07 22:02:56] 取引ID 31 は起動時に時刻が経過していたため、ステータスを更新します。
+[2026-01-07 22:02:56] 取引ID 32 は起動時に時刻が経過していたため、ステータスを更新します。
+[2026-01-07 22:02:56] 取引ID 33 は起動時に時刻が経過していたため、ステータスを更新します。
+[2026-01-07 22:02:56] 取引ステータスを trade_status.json に保存しました。
+[2026-01-07 22:02:57] Discord通知を送信しました。ステータス: 204
+[2026-01-07 22:02:57] エントリー 取引ID 34 (USD/JPY Buy): 目標時刻=22:06:00, ゆらぎ=2.94秒, 最終実行時刻=22:05:57
+[2026-01-07 22:02:57] 次のアクション 'PING_60S' まで 119.85 秒待機します...
+ENS WebSocket接続成功
+ENS接続監視モニターを開始します。
+ENS最終受信からの経過時間: 15.01秒
+[2026-01-07 22:03:13] Discord通知を送信しました。ステータス: 204
 ENS制御メッセージ検出: Heartbeat Reason=NoNewData
-ENS最終受信からの経過時間: 3.08秒
-ENS最終受信からの経過時間: 13.09秒
+ENS最終受信からの経過時間: 5.01秒
+ENS最終受信からの経過時間: 15.03秒
 ENS制御メッセージ検出: Heartbeat Reason=NoNewData
-ENS最終受信からの経過時間: 3.04秒
-ENS最終受信からの経過時間: 13.05秒
+ENS最終受信からの経過時間: 4.97秒
+ENS最終受信からの経過時間: 14.99秒
 ENS制御メッセージ検出: Heartbeat Reason=NoNewData
-ENS最終受信からの経過時間: 3.02秒
-ENS最終受信からの経過時間: 13.02秒
+ENS最終受信からの経過時間: 4.95秒
+ENS最終受信からの経過時間: 14.96秒
 ENS制御メッセージ検出: Heartbeat Reason=NoNewData
-ENS最終受信からの経過時間: 2.96秒
-ENS最終受信からの経過時間: 12.98秒
+ENS最終受信からの経過時間: 4.92秒
+ENS最終受信からの経過時間: 14.94秒
 ENS制御メッセージ検出: Heartbeat Reason=NoNewData
-ENS最終受信からの経過時間: 2.95秒
-ENS最終受信からの経過時間: 12.95秒
+ENS最終受信からの経過時間: 4.89秒
+ENS最終受信からの経過時間: 14.91秒
+[2026-01-07 22:04:57] 接続の事前確認 (PING_60S) を行います...
+[2026-01-07 22:04:57] 現在のアクセストークンを検証しています...
+[2026-01-07 22:04:57] トークン検証成功。
+[2026-01-07 22:04:57] 事前確認 (PING_60S) 成功。
+[2026-01-07 22:04:57] 次のアクション 'PING_30S' まで 29.70 秒待機します...
 ENS制御メッセージ検出: Heartbeat Reason=NoNewData
-ENS最終受信からの経過時間: 2.88秒
-ENS最終受信からの経過時間: 12.89秒
+ENS最終受信からの経過時間: 4.86秒
+ENS最終受信からの経過時間: 14.86秒
 ENS制御メッセージ検出: Heartbeat Reason=NoNewData
-ENS最終受信からの経過時間: 2.88秒
+ENS最終受信からの経過時間: 4.79秒
+[2026-01-07 22:05:27] 接続の事前確認 (PING_30S) を行います...
+[2026-01-07 22:05:27] 現在のアクセストークンを検証しています...
+[2026-01-07 22:05:27] トークン検証成功。
+[2026-01-07 22:05:27] 事前確認 (PING_30S) 成功。
+[2026-01-07 22:05:27] 次のアクション 'FINAL_ACTION' まで 29.70 秒待機します...
+ENS最終受信からの経過時間: 14.80秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.75秒
+ENS最終受信からの経過時間: 14.76秒
+[2026-01-07 22:05:57] エントリー 取引ID 34 (USD/JPY Buy) の実行時刻になりました。
+[2026-01-07 22:05:57] --- 取引ID 34 (USD/JPY Buy) のエントリー処理開始 ---
+[2026-01-07 22:05:57] 価格情報を取得します。UICs: 42, AssetType: FxSpot, FieldGroups: Quote,DisplayAndFormat,PriceInfo
+[2026-01-07 22:05:57] エントリー処理開始 (UIC: 42, Side: Buy, Amount: 50000.0)...
+[2026-01-07 22:05:57] UIC 42 の既存取引（ポジション/Working注文）を確認中...
+[2026-01-07 22:05:57] UIC 42 の既存取引は見つかりませんでした。
+[2026-01-07 22:05:57] 既存取引がないため、新規注文を発注します...
+[2026-01-07 22:05:57] 価格情報を取得します。UICs: 42, AssetType: FxSpot, FieldGroups: Quote,DisplayAndFormat
+[2026-01-07 22:05:58] 関連注文を確認: 1件
+[2026-01-07 22:05:58] ✅ SL注文が成立: OrderId=5036777720, Type=None
+[2026-01-07 22:05:58]   関連注文1: OrderId=5036777720, Status=None, Type=None
+[2026-01-07 22:05:58] Market + SL 注文送信完了: OrderId=5036777719
+[2026-01-07 22:05:58] 取引ステータスを trade_status.json に保存しました。
+[2026-01-07 22:05:58] 取引ステータスを trade_status.json に保存しました。
+[2026-01-07 22:05:58] ENSイベントを監視中 (OrderID: 5036777719, UIC: 42, タイプ: ['order_fill'])...
+ENS Orderイベント受信: {'AccountId': '21294788', 'AccountKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'ActivityTime': '2026-01-07T13:05:58.503625Z', 'ActivityType': 'Orders', 'Amount': 50000.0, 'AssetType': 'FxSpot', 'BuySell': 'Buy', 'ClientId': '21294788', 'ClientKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'CorrelationKey': 'fdfc6cfa-8d11-4bd3-b084-cd36a4a164b8', 'Duration': {'DurationType': 'DayOrder'}, 'ExternalReference': '20260107_trade_34_entry_v1', 'HandledBy': '21294788', 'IsSecondCurrencyOrder': False, 'OrderId': '5036777719', 'OrderRelation': 'IfDoneMaster', 'OrderType': 'Market', 'RelatedOrderId': ['5036777720'], 'RelatedOrderIds': ['5036777720'], 'SequenceId': '271986104', 'Status': 'Placed', 'SubStatus': 'Confirmed', 'Symbol': 'USDJPY', 'Uic': 42}
+ENS Orderイベント受信: {'AccountId': '21294788', 'AccountKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'ActivityTime': '2026-01-07T13:05:58.503625Z', 'ActivityType': 'Orders', 'Amount': 50000.0, 'AssetType': 'FxSpot', 'BuySell': 'Sell', 'ClientId': '21294788', 'ClientKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'CorrelationKey': 'fdfc6cfa-8d11-4bd3-b084-cd36a4a164b8', 'Duration': {'DurationType': 'GoodTillCancel'}, 'ExternalReference': '20260107_trade_34_entry_v1', 'HandledBy': '21294788', 'IsSecondCurrencyOrder': False, 'OrderId': '5036777720', 'OrderRelation': 'IfDoneSlave', 'OrderType': 'Stop', 'Price': 156.42, 'RelatedOrderId': ['5036777719'], 'RelatedOrderIds': ['5036777719'], 'SequenceId': '271986105', 'Status': 'Placed', 'SubStatus': 'Confirmed', 'Symbol': 'USDJPY', 'Uic': 42}
+ENS Orderイベント受信: {'AccountId': '21294788', 'AccountKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'ActivityTime': '2026-01-07T13:05:58.512620Z', 'ActivityType': 'Orders', 'Amount': 50000.0, 'AssetType': 'FxSpot', 'AveragePrice': 156.518, 'BuySell': 'Buy', 'ClientId': '21294788', 'ClientKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'CorrelationKey': 'fdfc6cfa-8d11-4bd3-b084-cd36a4a164b8', 'Duration': {'DurationType': 'DayOrder'}, 'ExecutionPrice': 156.518, 'ExternalReference': '20260107_trade_34_entry_v1', 'FillAmount': 50000.0, 'FilledAmount': 50000.0, 'HandledBy': '21294788', 'IsSecondCurrencyOrder': False, 'OrderId': '5036777719', 'OrderRelation': 'IfDoneMaster', 'OrderType': 'Market', 'PositionId': '5025264032', 'RelatedOrderId': ['5036777720'], 'RelatedOrderIds': ['5036777720'], 'SequenceId': '271986106', 'Status': 'FinalFill', 'SubStatus': 'Confirmed', 'Symbol': 'USDJPY', 'Uic': 42, 'ValueDate': '2026-01-09', 'Venue': 'XXXX'}
+✨ ENSから注文完全約定イベント: OrderID=5036777719, Price=156.518
+[2026-01-07 22:05:59] ★ ENSで期待するイベント(order_fill)を受信しました: {'type': 'order_fill', 'order_id': '5036777719', 'execution_price': Decimal('156.518'), 'execution_time': '2026-01-07T13:05:58.512620Z', 'filled_amount': Decimal('50000.0'), 'amount': Decimal('50000.0'), 'status': 'filled', 'uic': 42, 'position_id': '5025264032'}
+[2026-01-07 22:05:59] ✅ エントリー成功: 取引ID 34 (USD/JPY Buy)
+[2026-01-07 22:05:59] Discord通知を送信しました。ステータス: 204
+[2026-01-07 22:05:59] 取引ステータスを trade_status.json に保存しました。
+[2026-01-07 22:05:59] 決済 取引ID 34 (USD/JPY Buy): 目標時刻=22:09:00, ゆらぎ=2.51秒, 最終実行時刻=22:08:57
+[2026-01-07 22:05:59] 次のアクション 'PING_60S' まで 117.60 秒待機します...
+ENS最終受信からの経過時間: 4.82秒
+ENS最終受信からの経過時間: 14.84秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.67秒
+ENS最終受信からの経過時間: 14.68秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.68秒
+ENS最終受信からの経過時間: 14.69秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.61秒
+ENS最終受信からの経過時間: 14.62秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.58秒
+ENS最終受信からの経過時間: 14.60秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.55秒
+ENS最終受信からの経過時間: 14.56秒
+[2026-01-07 22:07:57] 接続の事前確認 (PING_60S) を行います...
+[2026-01-07 22:07:57] 現在のアクセストークンを検証しています...
+[2026-01-07 22:07:57] トークン検証成功。
+[2026-01-07 22:07:57] 事前確認 (PING_60S) 成功。
+[2026-01-07 22:07:57] 次のアクション 'PING_30S' まで 29.64 秒待機します...
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.53秒
+ENS最終受信からの経過時間: 14.54秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.52秒
+[2026-01-07 22:08:27] 接続の事前確認 (PING_30S) を行います...
+[2026-01-07 22:08:27] 現在のアクセストークンを検証しています...
+[2026-01-07 22:08:27] トークン検証成功。
+[2026-01-07 22:08:27] 事前確認 (PING_30S) 成功。
+[2026-01-07 22:08:27] 次のアクション 'FINAL_ACTION' まで 29.69 秒待機します...
+ENS最終受信からの経過時間: 14.52秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.45秒
+ENS最終受信からの経過時間: 14.46秒
+[2026-01-07 22:08:57] 決済 取引ID 34 (USD/JPY Buy) の実行時刻になりました。
+[2026-01-07 22:08:57] --- 取引ID 34 (USD/JPY Buy) の決済処理開始 ---
+[2026-01-07 22:08:57] ポジション情報を検索中 (UIC: 42)...
+[2026-01-07 22:08:57] UIC 42 の最新ポジションを発見しました。
+[2026-01-07 22:08:58] UIC 42 のSL候補注文はありません。追跡IDがないため全Working注文をキャンセルします。
+[2026-01-07 22:08:58] 注文キャンセルを実行しました: OrderId=5036777720
+[2026-01-07 22:08:58] ポジション 5025264032 (USD/JPY) の決済処理開始...
+[2026-01-07 22:08:58] ポジション情報を検索中 (UIC: 42)...
+ENS Orderイベント受信: {'AccountId': '21294788', 'AccountKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'ActivityTime': '2026-01-07T13:08:58.263846Z', 'ActivityType': 'Orders', 'Amount': 50000.0, 'AssetType': 'FxSpot', 'BuySell': 'Sell', 'ClientId': '21294788', 'ClientKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'CorrelationKey': 'fdfc6cfa-8d11-4bd3-b084-cd36a4a164b8', 'Duration': {'DurationType': 'GoodTillCancel'}, 'ExternalReference': '20260107_trade_34_entry_v1', 'HandledBy': '21294788', 'IsSecondCurrencyOrder': False, 'OrderId': '5036777720', 'OrderRelation': 'StandAlone', 'OrderType': 'Stop', 'Price': 156.42, 'SequenceId': '271986255', 'Status': 'Cancelled', 'SubStatus': 'Confirmed', 'Symbol': 'USDJPY', 'Uic': 42}
+🧹 SL注文がキャンセル: OrderID=5036777720, Status=cancelled
+ENSから注文ステータス変更イベント: OrderID=5036777720, Status=cancelled
+[2026-01-07 22:08:58] UIC 42 の最新ポジションを発見しました。
+[2026-01-07 22:08:58] 決済注文データ: Sell 50000.0 units of UIC 42
+[2026-01-07 22:08:58] USD/JPY の決済注文が受付されました。OrderId: 5036778328
+[2026-01-07 22:08:58] 決済注文が受付されました。OrderID: 5036778328
+[2026-01-07 22:08:58] 取引ステータスを trade_status.json に保存しました。
+[2026-01-07 22:08:58] ENSイベントを監視中 (OrderID: 5036778328, UIC: 42, タイプ: ['order_fill'])...
+ENS Orderイベント受信: {'AccountId': '21294788', 'AccountKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'ActivityTime': '2026-01-07T13:08:58.877892Z', 'ActivityType': 'Orders', 'Amount': 50000.0, 'AssetType': 'FxSpot', 'BuySell': 'Sell', 'ClientId': '21294788', 'ClientKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'CorrelationKey': 'cabfe04f-721b-4f9a-99a3-b76b727ea30f', 'Duration': {'DurationType': 'DayOrder'}, 'ExternalReference': '20260107_trade_34_exit_v1', 'HandledBy': '21294788', 'IsSecondCurrencyOrder': False, 'OrderId': '5036778328', 'OrderRelation': 'StandAlone', 'OrderType': 'Market', 'SequenceId': '271986263', 'Status': 'Placed', 'SubStatus': 'Confirmed', 'Symbol': 'USDJPY', 'Uic': 42}
+ENS Orderイベント受信: {'AccountId': '21294788', 'AccountKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'ActivityTime': '2026-01-07T13:08:58.882448Z', 'ActivityType': 'Orders', 'Amount': 50000.0, 'AssetType': 'FxSpot', 'AveragePrice': 156.527, 'BuySell': 'Sell', 'ClientId': '21294788', 'ClientKey': 'BlWiFwr94hk7OIVC4qLb6Q==', 'CorrelationKey': 'cabfe04f-721b-4f9a-99a3-b76b727ea30f', 'Duration': {'DurationType': 'DayOrder'}, 'ExecutionPrice': 156.527, 'ExternalReference': '20260107_trade_34_exit_v1', 'FillAmount': 50000.0, 'FilledAmount': 50000.0, 'HandledBy': '21294788', 'IsSecondCurrencyOrder': False, 'OrderId': '5036778328', 'OrderRelation': 'StandAlone', 'OrderType': 'Market', 'PositionId': '5025264086', 'SequenceId': '271986264', 'Status': 'FinalFill', 'SubStatus': 'Confirmed', 'Symbol': 'USDJPY', 'Uic': 42, 'ValueDate': '2026-01-09', 'Venue': 'XXXX'}    
+✨ ENSから注文完全約定イベント: OrderID=5036778328, Price=156.527
+[2026-01-07 22:08:59] ★ ENSで期待するイベント(order_fill)を受信しました: {'type': 'order_fill', 'order_id': '5036778328', 'execution_price': Decimal('156.527'), 'execution_time': '2026-01-07T13:08:58.882448Z', 'filled_amount': Decimal('50000.0'), 'amount': Decimal('50000.0'), 'status': 'filled', 'uic': 42, 'position_id': '5025264086'}
+[2026-01-07 22:08:59] イベント 'order_fill' により決済を確認しました。
+[2026-01-07 22:08:59] ポジション情報を検索中 (UIC: 42)...
+[2026-01-07 22:08:59] ClosedPositionsに該当がなくても保有ポジションなしと判定: UIC=42
+[2026-01-07 22:09:00] Discord通知を送信しました。ステータス: 204
+[2026-01-07 22:09:00] 取引ステータスを trade_status.json に保存しました。
+[2026-01-07 22:09:00] エントリー 取引ID 35 (USD/JPY Sell): 目標時刻=22:15:00, ゆらぎ=0.90秒, 最終実行時刻=22:14:59
+[2026-01-07 22:09:00] 次のアクション 'PING_60S' まで 298.37 秒待機します...
+ENS最終受信からの経過時間: 4.95秒
+ENS最終受信からの経過時間: 14.97秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.40秒
+ENS最終受信からの経過時間: 14.41秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.37秒
+ENS最終受信からの経過時間: 14.39秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.36秒
+ENS最終受信からの経過時間: 14.37秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.31秒
+ENS最終受信からの経過時間: 14.33秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.28秒
+ENS最終受信からの経過時間: 14.29秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.22秒
+ENS最終受信からの経過時間: 14.24秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.22秒
+ENS最終受信からの経過時間: 14.22秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.14秒
+ENS最終受信からの経過時間: 14.16秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.13秒
+ENS最終受信からの経過時間: 14.15秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.10秒
+ENS最終受信からの経過時間: 14.11秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 3.98秒
+ENS最終受信からの経過時間: 13.98秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 4.01秒
+ENS最終受信からの経過時間: 14.02秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 3.99秒
+ENS最終受信からの経過時間: 14.01秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 3.93秒
+ENS最終受信からの経過時間: 13.95秒
+[2026-01-07 22:13:59] 接続の事前確認 (PING_60S) を行います...
+[2026-01-07 22:13:59] 現在のアクセストークンを検証しています...
+[2026-01-07 22:13:59] トークン検証成功。
+[2026-01-07 22:13:59] 事前確認 (PING_60S) 成功。
+[2026-01-07 22:13:59] 次のアクション 'PING_30S' まで 29.70 秒待機します...
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 3.93秒
+ENS最終受信からの経過時間: 13.94秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 3.87秒
+[2026-01-07 22:14:29] 接続の事前確認 (PING_30S) を行います...
+[2026-01-07 22:14:29] 現在のアクセストークンを検証しています...
+[2026-01-07 22:14:29] トークン検証成功。
+[2026-01-07 22:14:29] 事前確認 (PING_30S) 成功。
+[2026-01-07 22:14:29] 次のアクション 'FINAL_ACTION' まで 29.71 秒待機します...
+ENS最終受信からの経過時間: 13.88秒
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS最終受信からの経過時間: 3.86秒
+ENS最終受信からの経過時間: 13.87秒
+[2026-01-07 22:14:59] エントリー 取引ID 35 (USD/JPY Sell) の実行時刻になりました。
+[2026-01-07 22:14:59] --- 取引ID 35 (USD/JPY Sell) のエントリー処理開始 ---
+[2026-01-07 22:14:59] 価格情報を取得します。UICs: 42, AssetType: FxSpot, FieldGroups: Quote,DisplayAndFormat,PriceInfo
+[2026-01-07 22:14:59] スプレッドが上限(3.5pips)を超えました(4.5pips)。スキップします。
+[2026-01-07 22:15:00] Discord通知を送信しました。ステータス: 204
+[2026-01-07 22:15:00] 取引ステータスを trade_status.json に保存しました。
+[2026-01-07 22:15:00] 本日の全取引が終了しました。
+[2026-01-07 22:15:00] CSV内の全取引を処理しました。サマリーを生成中...
+[2026-01-07 22:15:00] 口座残高を取得しています...
+[2026-01-07 22:15:00] 口座残高: 1007297.84 EUR
+[2026-01-07 22:15:01] Discord通知を送信しました。ステータス: 204
+[2026-01-07 22:15:01] 日次サマリー送信後、trade_status.json を削除しました。
+[2026-01-07 22:15:01] クリーンアップ処理を行います。
+[2026-01-07 22:15:01] クライアントからトークンとアカウント/クライアントキーをクリアしました。
+ENS制御メッセージ検出: Heartbeat Reason=NoNewData
+ENS WebSocketを切断します...
+ENS WebSocket接続が閉じられました。
+ENS接続断の詳細: reason=ConnectionClosed, exception=ConnectionClosedOK, close_code=1000, close_reason=, last_message_at=2026-01-07 22:15:01, last_message_id=41, last_ping_ok_at=2026-01-07 22:14:54, last_ping_rtt_ms=0.5
+ENS WebSocketを切断しました。
+[2026-01-07 22:15:02] Discord通知を送信しました。ステータス: 204
+[2026-01-07 22:15:02] プログラムを正常に終了しました。
+ENS monitor task cancelled
+PS C:\Users\admin\OneDrive\ドキュメント\アノマリーFX\SAXO\自分用Saxo\saxo_bot> 
