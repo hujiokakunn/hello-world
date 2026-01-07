@@ -109,7 +109,6 @@ class EnvConfig:
     discord_webhook_url: Optional[str]
     trades_csv_path: str
     stop_loss_pips: float
-    take_profit_pips: float
     spread_pips_limit: float
     entry_retry_count: int
     entry_retry_interval: int
@@ -206,7 +205,6 @@ def load_config() -> EnvConfig:
         discord_webhook_url=discord_webhook_url,
         trades_csv_path=_get_env("SAXO_TRADES_CSV", "saxo_trades.csv") or "saxo_trades.csv",
         stop_loss_pips=_get_env_float("SAXO_STOP_LOSS_PIPS", 1.0),  # ストップロス値
-        take_profit_pips=_get_env_float("SAXO_TAKE_PROFIT_PIPS", 4000.0),  # テイクプロフィット値
         spread_pips_limit=_get_env_float("SAXO_SPREAD_PIPS_LIMIT", 3.5),  # スプレッド許容値
         entry_retry_count=_get_env_int("SAXO_ENTRY_RETRY_COUNT", 0),
         entry_retry_interval=_get_env_int("SAXO_ENTRY_RETRY_INTERVAL", 10),
@@ -544,7 +542,7 @@ class SaxoClient:
         self.ens_reference_id: Optional[str] = None
         self.streaming_authorize_enabled: bool = cfg.streaming_authorize_enabled
         self.related_order_labels: Dict[str, str] = {}
-        self.tp_sl_order_ids_by_uic: Dict[int, set] = {}
+        self.sl_order_ids_by_uic: Dict[int, set] = {}
 
         log(
             f"[ENV] {self.env_name} selected. API_BASE={self.base_url} AUTH={self.auth_endpoint} "
@@ -1237,23 +1235,20 @@ class SaxoClient:
         return float(Decimal(str(value)).quantize(quant, rounding=ROUND_HALF_UP))
 
     @staticmethod
-    def _infer_tp_sl_label(order_type: Optional[str]) -> str:
+    def _infer_sl_label(order_type: Optional[str]) -> str:
         if not order_type:
-            return "TP/SL"
+            return "SL"
         order_type_lower = str(order_type).lower()
-        if order_type_lower.startswith("limit"):
-            return "TP"
         if order_type_lower.startswith("stop"):
             return "SL"
-        return "TP/SL"
+        return "SL"
 
-    def place_market_order_with_sl_tp(
+    def place_market_order_with_sl(
         self,
         uic: int,
         buy_sell: str,
         amount: float,
         stop_loss_pips: float,
-        take_profit_pips: float,
         external_reference: str,
     ) -> str:
         if self.access_token is None:
@@ -1281,10 +1276,8 @@ class SaxoClient:
 
         if buy_sell == "Buy":
             sl_price = base_price - stop_loss_pips * pip_value
-            tp_price = base_price + take_profit_pips * pip_value
         else:
             sl_price = base_price + stop_loss_pips * pip_value
-            tp_price = base_price - take_profit_pips * pip_value
 
         body = {
             "AccountKey": self.account_key,
@@ -1320,23 +1313,6 @@ class SaxoClient:
                 )
             else:
                 log(f"SL価格が無効です。SLをスキップします: sl_price={sl_price}, rounded={sl_rounded}")
-        if take_profit_pips > 0:
-            tp_rounded = self._round_price(tp_price, display)
-            if tp_rounded > 0:
-                related_orders.append(
-                    {
-                        "Uic": uic,
-                        "AssetType": "FxSpot",
-                        "BuySell": related_buy_sell,
-                        "Amount": float(amount),
-                        "OrderType": "Limit",
-                        "OrderPrice": tp_rounded,
-                        "OrderDuration": {"DurationType": "GoodTillCancel"},
-                        "ManualOrder": False,
-                    }
-                )
-            else:
-                log(f"TP価格が無効です。TPをスキップします: tp_price={tp_price}, rounded={tp_rounded}")
 
         if related_orders:
             body["Orders"] = related_orders
@@ -1361,12 +1337,10 @@ class SaxoClient:
                         related_order_id = related.get("OrderId")
                         related_order_type = related.get("OrderType")
                         if related_order_id:
-                            label = self._infer_tp_sl_label(related_order_type)
+                            label = self._infer_sl_label(related_order_type)
                             self.related_order_labels[str(related_order_id)] = label
-                            self.tp_sl_order_ids_by_uic.setdefault(uic, set()).add(str(related_order_id))
-                            log(
-                                f"✅ {label}注文が成立: OrderId={related_order_id}, Type={related_order_type}"
-                            )
+                            self.sl_order_ids_by_uic.setdefault(uic, set()).add(str(related_order_id))
+                            log(f"✅ {label}注文が成立: OrderId={related_order_id}, Type={related_order_type}")
                         log(
                             "  関連注文{idx}: OrderId={order_id}, Status={status}, Type={order_type}".format(
                                 idx=idx + 1,
@@ -1386,7 +1360,7 @@ class SaxoClient:
             log(f"注文応答に OrderId がありません: {data}")
             raise RuntimeError("OrderId が取得できませんでした。")
 
-        log(f"Market + SL/TP 注文送信完了: OrderId={order_id}")
+        log(f"Market + SL 注文送信完了: OrderId={order_id}")
         return order_id
 
     def place_order(
@@ -1413,19 +1387,18 @@ class SaxoClient:
 
         log("既存取引がないため、新規注文を発注します...")
 
-        if current_price_for_sl_tp and (self.cfg.take_profit_pips > 0 or self.cfg.stop_loss_pips > 0):
+        if current_price_for_sl_tp and self.cfg.stop_loss_pips > 0:
             try:
-                order_id = self.place_market_order_with_sl_tp(
+                order_id = self.place_market_order_with_sl(
                     uic=uic,
                     buy_sell=side,
                     amount=float(amount),
                     stop_loss_pips=self.cfg.stop_loss_pips,
-                    take_profit_pips=self.cfg.take_profit_pips,
                     external_reference=external_reference,
                 )
                 return {"order_id": order_id, "status": "pending_fill", "external_reference": external_reference}
             except Exception as e:
-                log(f"SL/TP付き注文に失敗したため通常注文へフォールバックします: {e}")
+                log(f"SL付き注文に失敗したため通常注文へフォールバックします: {e}")
 
         order_data = {
             "AccountKey": self.account_key,
@@ -1718,6 +1691,18 @@ class SaxoClient:
         working_statuses = {"Working", "Placed", "Queued"}
         return [order for order in orders_data["Data"] if order.get("Status") in working_statuses]
 
+    def list_closed_positions_by_uic(self, uic: int, top: int = 50) -> List[Dict]:
+        endpoint = "/port/v1/closedpositions"
+        params = {
+            "AccountKey": self.account_key,
+            "ClientKey": self.client_key,
+            "$top": top,
+        }
+        closed_data = self._make_request("GET", endpoint, params=params)
+        if not closed_data or "Data" not in closed_data:
+            return []
+        return [pos for pos in closed_data["Data"] if str(pos.get("Uic")) == str(uic)]
+
     def cancel_order(self, order_id: str, uic: Optional[int] = None) -> bool:
         if not order_id:
             return False
@@ -1729,11 +1714,11 @@ class SaxoClient:
             return False
         log(f"注文キャンセルを実行しました: OrderId={order_id}")
         if uic is not None:
-            self.tp_sl_order_ids_by_uic.get(uic, set()).discard(str(order_id))
+            self.sl_order_ids_by_uic.get(uic, set()).discard(str(order_id))
         return True
 
-    def _get_tp_sl_working_orders(self, uic: int, working_orders: List[Dict]) -> List[Dict]:
-        saved_ids = self.tp_sl_order_ids_by_uic.get(uic, set())
+    def _get_sl_working_orders(self, uic: int, working_orders: List[Dict]) -> List[Dict]:
+        saved_ids = self.sl_order_ids_by_uic.get(uic, set())
         if not saved_ids:
             return []
         return [order for order in working_orders if str(order.get("OrderId")) in saved_ids]
@@ -1743,16 +1728,16 @@ class SaxoClient:
         if not working_orders:
             log(f"UIC {uic} のキャンセル対象注文はありません。")
             return
-        cancel_candidates = self._get_tp_sl_working_orders(uic, working_orders)
+        cancel_candidates = self._get_sl_working_orders(uic, working_orders)
         if not cancel_candidates:
-            log(f"UIC {uic} のTP/SL候補注文はありません。追跡IDがないため全Working注文をキャンセルします。")
+            log(f"UIC {uic} のSL候補注文はありません。追跡IDがないため全Working注文をキャンセルします。")
             for order in working_orders:
                 order_id = str(order.get("OrderId"))
                 if order_id:
                     self.cancel_order(order_id, uic=uic)
             return
 
-        log(f"UIC {uic} のTP/SL候補注文を {len(cancel_candidates)} 件キャンセルします。")
+        log(f"UIC {uic} のSL候補注文を {len(cancel_candidates)} 件キャンセルします。")
         failed_ids = set()
         for order in cancel_candidates:
             order_id = str(order.get("OrderId"))
@@ -1762,19 +1747,19 @@ class SaxoClient:
                 failed_ids.add(order_id)
 
         if failed_ids:
-            log(f"TP/SLキャンセル失敗検知: {len(failed_ids)} 件。再確認します。")
+            log(f"SLキャンセル失敗検知: {len(failed_ids)} 件。再確認します。")
             working_orders = self.list_working_orders_by_uic(uic)
-            remaining = self._get_tp_sl_working_orders(uic, working_orders)
+            remaining = self._get_sl_working_orders(uic, working_orders)
             retry_ids = {str(order.get("OrderId")) for order in remaining if order.get("OrderId")}
             if retry_ids:
-                log(f"TP/SLキャンセル再試行を実行します: {len(retry_ids)} 件")
+                log(f"SLキャンセル再試行を実行します: {len(retry_ids)} 件")
                 for order_id in retry_ids:
                     self.cancel_order(order_id, uic=uic)
 
             working_orders = self.list_working_orders_by_uic(uic)
-            remaining = self._get_tp_sl_working_orders(uic, working_orders)
+            remaining = self._get_sl_working_orders(uic, working_orders)
             if remaining:
-                log(f"TP/SLが残存しているため全注文キャンセルを実行します: {len(working_orders)} 件")
+                log(f"SLが残存しているため全注文キャンセルを実行します: {len(working_orders)} 件")
                 for order in working_orders:
                     order_id = str(order.get("OrderId"))
                     if order_id:
@@ -2190,7 +2175,7 @@ class SaxoENSClient:
                         f"🎯 {related_label}に到達し約定: OrderID={order_id}, Price={execution_price}"
                     )
                     self.saxo_client.related_order_labels.pop(order_id, None)
-                    for uic, order_ids in self.saxo_client.tp_sl_order_ids_by_uic.items():
+                    for uic, order_ids in self.saxo_client.sl_order_ids_by_uic.items():
                         order_ids.discard(order_id)
                 self._log(f"✨ ENSから注文完全約定イベント: OrderID={order_id}, Price={execution_price}")
                 await self.saxo_client._get_ens_event_queue().put(
@@ -2223,7 +2208,7 @@ class SaxoENSClient:
             if related_label:
                 self._log(f"🧹 {related_label}注文がキャンセル: OrderID={order_id}, Status={status}")
                 self.saxo_client.related_order_labels.pop(order_id, None)
-                for uic, order_ids in self.saxo_client.tp_sl_order_ids_by_uic.items():
+                for uic, order_ids in self.saxo_client.sl_order_ids_by_uic.items():
                     order_ids.discard(order_id)
             self._log(f"ENSから注文ステータス変更イベント: OrderID={event_data.get('OrderId')}, Status={status}")
             await self.saxo_client._get_ens_event_queue().put(
@@ -2588,10 +2573,14 @@ async def confirm_flat(client: SaxoClient, uic: int, timeout_seconds: int = 60) 
     while time.time() - start < timeout_seconds:
         pos = await asyncio.to_thread(client.get_position_details_by_uic, uic)
         if not pos or pos.get("amount") == 0:
+            closed_positions = await asyncio.to_thread(client.list_closed_positions_by_uic, uic)
+            if closed_positions:
+                log(f"ClosedPositionsで決済済みを確認: UIC={uic} 件数={len(closed_positions)}")
+            else:
+                log(f"ClosedPositionsに該当がなくても保有ポジションなしと判定: UIC={uic}")
             return True
         await asyncio.sleep(1)
     return False
-
 
 async def main():
     log("SAXO自動売買プログラム - 開始")
@@ -2756,7 +2745,6 @@ async def main():
     if balance is not None and currency:
         startup_msg += f"\nFX口座残高: {balance} {currency}"
     startup_msg += f"\nストップロス: {CFG.stop_loss_pips} pips"
-    startup_msg += f"\nテイクプロフィット: {CFG.take_profit_pips} pips"
     send_discord(startup_msg)
 
     pending_confirmation_tasks: List[asyncio.Task] = []
