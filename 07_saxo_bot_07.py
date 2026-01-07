@@ -1910,8 +1910,8 @@ class SaxoENSClient:
             self._log("既に再接続処理が進行中です。")
             return
 
-        async def _reconnect_logic():
-            force_new = force_new_context
+        async def _reconnect_logic(force_new_context_flag: bool):
+            force_new = force_new_context_flag
             reconnect_delay = 1
             max_reconnect_delay = CFG.ens_reconnect_max_delay_seconds
             self.reconnect_started_at = time.time()
@@ -1970,7 +1970,7 @@ class SaxoENSClient:
                 reconnect_delay = min(reconnect_delay * 2, max_reconnect_delay)
                 reconnect_delay += random.uniform(0, 0.5)
 
-        self.reconnect_task = asyncio.create_task(_reconnect_logic())
+        self.reconnect_task = asyncio.create_task(_reconnect_logic(force_new_context))
 
     def _extract_binary_messages(self, data: bytes) -> Tuple[List[Tuple[int, str, str]], bytes]:
         messages: List[Tuple[int, str, str]] = []
