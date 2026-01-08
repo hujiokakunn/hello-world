@@ -204,8 +204,8 @@ def load_config() -> EnvConfig:
         saxo_password=saxo_password,
         discord_webhook_url=discord_webhook_url,
         trades_csv_path=_get_env("SAXO_TRADES_CSV", "saxo_trades.csv") or "saxo_trades.csv",
-        stop_loss_pips=_get_env_float("SAXO_STOP_LOSS_PIPS", 1.0),  # ストップロス値
-        spread_pips_limit=_get_env_float("SAXO_SPREAD_PIPS_LIMIT", 3.5),  # スプレッド許容値
+        stop_loss_pips=_get_env_float("SAXO_STOP_LOSS_PIPS", 20.0),  # ストップロス値
+        spread_pips_limit=_get_env_float("SAXO_SPREAD_PIPS_LIMIT", 0.6),  # スプレッド許容値
         entry_retry_count=_get_env_int("SAXO_ENTRY_RETRY_COUNT", 0),
         entry_retry_interval=_get_env_int("SAXO_ENTRY_RETRY_INTERVAL", 10),
         exit_retry_count=_get_env_int("SAXO_EXIT_RETRY_COUNT", 3),
@@ -412,7 +412,7 @@ def _mask_url_query(url: str, keys: Tuple[str, ...] = ("code", "state")) -> str:
     qs = urllib.parse.parse_qs(parsed.query)
     for key in keys:
         if key in qs:
-            qs[key] = ["***"]
+            qs[key] = ["*****"]
     return urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(qs, doseq=True)))
 
 
@@ -862,7 +862,10 @@ class SaxoClient:
             log("手動ログインモードでOAuth認証を進めます。")
             _, thread = start_local_http_server(self.redirect_uri)
             OAuthCallbackHandler.expected_state = expected_state
-            log(f"認証URLをブラウザで開きます: {auth_url}")
+            masked_auth_url = _mask_url_query(
+                auth_url, keys=("client_id", "state", "code", "redirect_uri", "code_challenge")
+            )
+            log(f"認証URLをブラウザで開きます: {masked_auth_url}")
             webbrowser.open(auth_url)
             completed = OAuthCallbackHandler.done_event.wait(timeout=self.cfg.oauth_callback_timeout_seconds)
             if not completed:
@@ -883,7 +886,10 @@ class SaxoClient:
 
         auth_code = None
         try:
-            log(f"認証URLに移動します: {auth_url}")
+            masked_auth_url = _mask_url_query(
+                auth_url, keys=("client_id", "state", "code", "redirect_uri", "code_challenge")
+            )
+            log(f"認証URLに移動します: {masked_auth_url}")
             driver.get(auth_url)
 
             log("ブラウザ経由でログインしてください。必要に応じてSMSコードを待機します (最大5分)。")
@@ -951,7 +957,7 @@ class SaxoClient:
         }
         try:
             response = requests.post(token_url, data=payload, headers=headers, timeout=20)
-            if response.status_code != 200:
+            if response.status_code not in (200, 201):
                 log(f"トークン交換HTTPエラー: {response.status_code}")
             response.raise_for_status()
             token_data = response.json()
@@ -2290,15 +2296,16 @@ class SaxoENSClient:
             self._log(f"ENS ping失敗: {e} ({type(e).__name__})")
 
     def _maybe_notify_stale(self, seconds_since_last: float) -> None:
-        if not self._notify:
-            return
         for threshold in CFG.ens_notify_thresholds:
             if seconds_since_last >= threshold and self._last_notify_seconds != threshold:
                 self._last_notify_seconds = threshold
-                self._notify(
+                message = (
                     f"⚠️ ENS無受信 {threshold}秒超過: 最終受信から{seconds_since_last:.1f}秒。"
                     f"再接続試行中={self.reconnect_task is not None and not self.reconnect_task.done()}"
                 )
+                self._log(message)
+                if self._notify:
+                    self._notify(message)
                 break
 
     async def monitor_connection(self):
@@ -2310,7 +2317,6 @@ class SaxoENSClient:
                 await asyncio.sleep(CFG.ens_monitor_interval_seconds)
 
                 time_since_last_message = time.time() - self.last_message_timestamp
-                self._log(f"ENS最終受信からの経過時間: {time_since_last_message:.2f}秒")
 
                 await self._record_ping()
                 self._maybe_notify_stale(time_since_last_message)
